@@ -93,6 +93,8 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         public async Task<IActionResult> EstablishmentLogin([FromBody] WorkerLoginRequest workerLoginRequest)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveWorkerLoginDetailsAsync(workerLoginRequest));
+
+            //Test
         }
     }
 }
