@@ -90,7 +90,7 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.WorkerLogin)]
-        public async Task<IActionResult> EstablishmentLogin([FromBody] WorkerLoginRequest workerLoginRequest)
+        public async Task<IActionResult> WorkerLogin([FromBody] WorkerLoginRequest workerLoginRequest)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveWorkerLoginDetailsAsync(workerLoginRequest));
 
