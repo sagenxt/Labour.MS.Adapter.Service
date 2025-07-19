@@ -1,0 +1,1 @@
+# Labour.MS.Adapter.Service
