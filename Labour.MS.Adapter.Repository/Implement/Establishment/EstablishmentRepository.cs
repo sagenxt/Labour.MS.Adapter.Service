@@ -175,5 +175,32 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                     nameof(GetEstablishmentLoginDetailsAsync));
             }
         }
+
+        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> GetAllAadhaarCardDetailsAsync()
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_GET_ALL_AADHAAR_CARD_DETAILS,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<SearchAadhaarCardResponse?>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving aadhaar card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(GetAllEstablishmentDetailsAsync));
+            }
+        }
     }
 }
