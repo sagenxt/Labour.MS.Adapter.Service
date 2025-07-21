@@ -36,7 +36,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
             _apiResponseFactory = apiResponseFactory;
             _wrapperDbContext = wrapperDbContext;
         }
-        public async Task<IApiResponse<IEnumerable<WorkerDetails?>>> GetAllWorkerDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> GetAllWorkerDetailsAsync()
         {
             try
             {
@@ -51,18 +51,18 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerDetails?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving worker details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetails?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllWorkerDetailsAsync));
             }
         }
-        public async Task<IApiResponse<WorkerDetails?>> GetWorkerDetailsByIdAsync(string workerId)
+        public async Task<IApiResponse<WorkerDetailsResponse?>> GetWorkerDetailsByIdAsync(long workerId)
         {
             try
             {
@@ -78,18 +78,18 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryFirstOrDefaultAsync<WorkerDetails?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryFirstOrDefaultAsync<WorkerDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving workers details by id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetails?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetWorkerDetailsByIdAsync));
             }
         }
-        public async Task<IApiResponse<IEnumerable<WorkerDetails?>>> GetWorkersByEstablishmentIdAsync(string establishmentId)
+        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> GetWorkersByEstablishmentIdAsync(long establishmentId)
         {
             try
             {
@@ -105,18 +105,18 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerDetails?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving workers details by establishment");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetails?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetWorkersByEstablishmentIdAsync));
             }
         }
-        public async Task<IApiResponse<WorkerDetails?>> SaveWorkerDetailsAsync(WorkerDetails request)
+        public async Task<IApiResponse<WorkerPersistResponse?>> SaveWorkerDetailsAsync(WorkerDetailsRequest request)
         {
             try
             {
@@ -177,13 +177,13 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<WorkerDetails>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<WorkerPersistResponse>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while saving worker details.");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetails?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerPersistResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(SaveWorkerDetailsAsync));
             }

@@ -1,0 +1,13 @@
+﻿using Labour.MS.Adapter.Models.Data.Worker;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Labour.MS.Adapter.Models.DTOs.Response.Worker
+{
+    public class WorkerDetailsResponse : WorkerDetail
+    {
+    }
+}
