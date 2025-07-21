@@ -6,10 +6,10 @@ namespace Labour.MS.Adapter.Repository.Interface.Worker
 {
     public interface IWorkerRepository
     {
-        Task<IApiResponse<IEnumerable<WorkerDetails?>>> GetAllWorkerDetailsAsync();
-        Task<IApiResponse<WorkerDetails?>> GetWorkerDetailsByIdAsync(string workerId);
-        Task<IApiResponse<IEnumerable<WorkerDetails?>>> GetWorkersByEstablishmentIdAsync(string workerId);
-        Task<IApiResponse<WorkerDetails?>> SaveWorkerDetailsAsync(WorkerDetails request);
+        Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> GetAllWorkerDetailsAsync();
+        Task<IApiResponse<WorkerDetailsResponse?>> GetWorkerDetailsByIdAsync(long workerId);
+        Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> GetWorkersByEstablishmentIdAsync(long establishmentId);
+        Task<IApiResponse<WorkerPersistResponse?>> SaveWorkerDetailsAsync(WorkerDetailsRequest request);
         Task<IApiResponse<WorkerLoginResponse?>> GetWorkerLoginDetailsAsync(WorkerLoginRequest request);
     }
 }

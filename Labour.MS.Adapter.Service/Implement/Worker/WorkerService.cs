@@ -22,13 +22,13 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
         private readonly ILogger _logger;
         private readonly IMapper _mapper;
         private readonly IApiResponseFactory _apiResponseFactory;
-        private readonly IValidator<WorkerDetails> _workerRequestDetailsValidator;
+        private readonly IValidator<WorkerDetailsRequest> _workerRequestDetailsValidator;
         private readonly IValidator<WorkerLoginRequest> _WorkerLoginRequestValidator;
         private readonly IWorkerRepository _workerRepository;
         public WorkerService(ILoggerFactory loggerFactory,
                            IMapper mapper,
                            IApiResponseFactory apiResponseFactory,
-                           IValidator<WorkerDetails> workerRequestDetailValidator,
+                           IValidator<WorkerDetailsRequest> workerRequestDetailValidator,
                            IValidator<WorkerLoginRequest> WorkerLoginRequestValidator,
                            IWorkerRepository workerRepository)
         {
@@ -39,7 +39,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             this._WorkerLoginRequestValidator = WorkerLoginRequestValidator;
             this._workerRepository = workerRepository;
         }
-        public async Task<IApiResponse<IEnumerable<WorkerDetails?>>> RetrieveAllWorkerDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveAllWorkerDetailsAsync()
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveAllWorkerDetailsAsync)} started");
             try
@@ -49,7 +49,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving worker details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerDetails?>>("" ?? "Unknown error", nameof(RetrieveAllWorkerDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllWorkerDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllWorkerDetailsAsync)} completed");
@@ -58,13 +58,13 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving worker details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetails?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveAllWorkerDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<WorkerDetails?>> RetrieveWorkerDetailsByIdAsync(string workerId)
+        public async Task<IApiResponse<WorkerDetailsResponse?>> RetrieveWorkerDetailsByIdAsync(long workerId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerDetailsByIdAsync)} started");
             try
@@ -85,7 +85,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving worker details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetails?>("" ?? "Unknown error", nameof(RetrieveWorkerDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkerDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerDetailsByIdAsync)} completed");
@@ -94,13 +94,13 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving worker details based on id: {workerId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetails?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveWorkerDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<WorkerDetails?>>> RetrieveWorkersByEstablishmentIdAsync(string establishmentId)
+        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveWorkersByEstablishmentIdAsync(long establishmentId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} started");
             try
@@ -110,7 +110,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving workers by worker id.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerDetails?>>("" ?? "Unknown error", nameof(RetrieveWorkersByEstablishmentIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkersByEstablishmentIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} completed");
@@ -119,16 +119,15 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving workers by worker id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetails?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveWorkersByEstablishmentIdAsync));
             }
         }
 
-        public async Task<IApiResponse<WorkerDetails?>> PersistWorkerDetailsAsync(WorkerDetails request)
+        public async Task<IApiResponse<WorkerPersistResponse?>> PersistWorkerDetailsAsync(WorkerDetailsRequest request)
         {
             this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsAsync)} started");
-            var workerDetails = new WorkerDetails();
             try
             {
                 //var validationResult = await this._workerRequestDetailsValidator.ValidateAsync(request);
@@ -149,7 +148,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                     if (response.Data != null && response.Data.StatusCode != 200)
                     {
                         this._logger.LogWarning(response.Data.Message);
-                        return this._apiResponseFactory.BadRequestApiResponse<WorkerDetails?>(response.Data.Message ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
+                        return this._apiResponseFactory.BadRequestApiResponse<WorkerPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
                     }
 
                     this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsAsync)} completed");
@@ -158,13 +157,13 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 else
                 {
                     this._logger.LogWarning("Error occurred while saving worker info.");
-                    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetails?>("" ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
                 }
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "An exception occurred in persisting worker information.");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerDetails?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerPersistResponse?>(
                     "An unexpected error occurred while processing the request.",
                     nameof(PersistWorkerDetailsAsync));
             }
@@ -191,7 +190,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving worker login details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>("" ?? "Unknown error", nameof(RetrieveWorkerLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkerLoginDetailsAsync));
                 }
 
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);

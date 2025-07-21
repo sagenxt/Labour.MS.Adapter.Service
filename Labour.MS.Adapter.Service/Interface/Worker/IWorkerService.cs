@@ -8,10 +8,10 @@ namespace Labour.MS.Adapter.Service.Interface.Worker
 {
     public interface IWorkerService
     {
-        Task<IApiResponse<IEnumerable<WorkerDetails?>>> RetrieveAllWorkerDetailsAsync();
-        Task<IApiResponse<WorkerDetails?>> RetrieveWorkerDetailsByIdAsync(string workerId);
-        Task<IApiResponse<IEnumerable<WorkerDetails?>>> RetrieveWorkersByEstablishmentIdAsync(string establishmentId);
-        Task<IApiResponse<WorkerDetails?>> PersistWorkerDetailsAsync(WorkerDetails request);
+        Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveAllWorkerDetailsAsync();
+        Task<IApiResponse<WorkerDetailsResponse?>> RetrieveWorkerDetailsByIdAsync(long workerId);
+        Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveWorkersByEstablishmentIdAsync(long establishmentId);
+        Task<IApiResponse<WorkerPersistResponse?>> PersistWorkerDetailsAsync(WorkerDetailsRequest request);
         Task<IApiResponse<WorkerLoginResponse?>> RetrieveWorkerLoginDetailsAsync(WorkerLoginRequest request);
     }
 }

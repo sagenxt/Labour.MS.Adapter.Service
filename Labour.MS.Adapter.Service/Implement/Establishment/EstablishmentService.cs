@@ -98,10 +98,10 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<EstablishmentResponse?>> PersistEstablishmentInfoAsync(EstablishmentDetailsRequest request)
+        public async Task<IApiResponse<EstablishmentPersistResponse?>> PersistEstablishmentInfoAsync(EstablishmentDetailsRequest request)
         {
             this._logger.LogInformation($"Method Name : {nameof(PersistEstablishmentInfoAsync)} started");
-            var establishmentResponse = new EstablishmentResponse();
+            var establishmentResponse = new EstablishmentPersistResponse();
             try
             {
                 var validationResult = await this._establishmentRequestDetailValidator.ValidateAsync(request);
@@ -113,7 +113,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                         errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
                     }
                     this._logger.LogWarning(string.Format(WarningMessages.InvalidEstablishmentRequestDetails, errorMessage));
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentResponse?>(string.Format(WarningMessages.InvalidEstablishmentRequestDetails, errorMessage), nameof(PersistEstablishmentInfoAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentPersistResponse?>(string.Format(WarningMessages.InvalidEstablishmentRequestDetails, errorMessage), nameof(PersistEstablishmentInfoAsync));
                 }
                 var response = await this._establishmentRepository.SaveEstablishmentDetailsAsync(request);
 
@@ -122,7 +122,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                     if (response.Data != null && response.Data.StatusCode != 200)
                     {
                         this._logger.LogWarning(response.Data.Message);
-                        return this._apiResponseFactory.BadRequestApiResponse<EstablishmentResponse?>(response.Data.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
+                        return this._apiResponseFactory.BadRequestApiResponse<EstablishmentPersistResponse?>(response.Data.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
                     }
 
                     this._logger.LogInformation($"Method Name : {nameof(PersistEstablishmentInfoAsync)} completed");
@@ -131,13 +131,13 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 else
                 {
                     this._logger.LogWarning("Error occurred while saving establishment info.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
                 }
             }
             catch (Exception ex)
             {
                 this._logger.LogError(ex, "An exception occurred in persisting establishment information.");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentPersistResponse?>(
                     "An unexpected error occurred while processing the request.",
                     nameof(PersistEstablishmentInfoAsync));
             }

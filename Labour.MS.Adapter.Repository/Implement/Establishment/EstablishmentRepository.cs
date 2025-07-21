@@ -84,7 +84,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<EstablishmentResponse?>> SaveEstablishmentDetailsAsync(EstablishmentDetailsRequest request)
+        public async Task<IApiResponse<EstablishmentPersistResponse?>> SaveEstablishmentDetailsAsync(EstablishmentDetailsRequest request)
         {
             try
             {
@@ -136,13 +136,13 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<EstablishmentResponse>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<EstablishmentPersistResponse>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while saving establishment details.");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentPersistResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(SaveEstablishmentDetailsAsync));
             }

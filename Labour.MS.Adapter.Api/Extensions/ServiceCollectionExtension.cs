@@ -64,7 +64,7 @@ namespace Labour.MS.Adapter.Api.Extensions
 
             services.AddScoped<IWorkerService, WorkerService>();
             services.AddScoped<IWorkerRepository, WorkerRepository>();
-            services.AddScoped<IValidator<WorkerDetails>, WorkerDetailsValidator>();
+            services.AddScoped<IValidator<WorkerDetailsRequest>, WorkerDetailsRequestValidator>();
             services.AddScoped<IValidator<WorkerLoginRequest>, WorkerLoginRequestValidator>();
 
             return services;
