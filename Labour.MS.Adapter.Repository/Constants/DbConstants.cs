@@ -59,6 +59,8 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_PERSIST_WORKER_DETAILS = "usp_Persist_Worker_Details";
         public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
 
+        public const string USP_GET_ALL_AADHAAR_CARD_DETAILS = "usp_Get_All_Aadhaar_Card_Details";
+
         public const string Get_Cities = "Get_Cities";
         public const string Get_Districts = "Get_Districts";
         public const string Get_Villages_Areas = "Get_Villages_Areas";

@@ -16,6 +16,7 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string EstablishmentDetails = "establishment/details";
         public const string EstablishmentAllDetails = "establishment/alldetails";
         public const string EstablishmentLogin = "establishment/login";
+        public const string WorkerAllAadhaarCardDetails = "establishment/allaadhaarcarddetails";
 
         public const string VillagesAreasAllDetails = "villagesareas/details";
         public const string VillageAreaDetailsById = "villagesareas/detailsbyId";

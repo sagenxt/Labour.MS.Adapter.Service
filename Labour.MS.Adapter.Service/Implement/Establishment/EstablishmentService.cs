@@ -47,7 +47,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving establishment details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<EstablishmentDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveAllEstablishmentDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<EstablishmentDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllEstablishmentDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllEstablishmentDetailsAsync)} completed");
@@ -83,7 +83,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving establishment details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentDetailsResponse?>("" ?? "Unknown error", nameof(RetrieveEstablishmentDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveEstablishmentDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveEstablishmentDetailsByIdAsync)} completed");
@@ -131,7 +131,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 else
                 {
                     this._logger.LogWarning("Error occurred while saving establishment info.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentResponse?>("" ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
                 }
             }
             catch (Exception ex)
@@ -164,10 +164,10 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving establishment login details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("" ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
 
-                var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password);
+                var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
                 if (!isLoginSuccess)
                 {
                     this._logger.LogWarning("Login failed due to entered password is wrong.");
@@ -185,6 +185,30 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             }
         }
 
+        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> RetrieveAllAadhaarCardDetailsAsync()
+        {
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveAllAadhaarCardDetailsAsync)} started");
+            try
+            {
+                var response = await this._establishmentRepository.GetAllAadhaarCardDetailsAsync();
+
+                if (response.HasErrors())
+                {
+                    this._logger.LogWarning("Error occurred while retrieving all aadhaar card details.");
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllAadhaarCardDetailsAsync));
+                }
+
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveAllAadhaarCardDetailsAsync)} completed");
+                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"An exception occurred while retrieving all aadhaar card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(RetrieveAllAadhaarCardDetailsAsync));
+            }
+        }
 
     }
 }
