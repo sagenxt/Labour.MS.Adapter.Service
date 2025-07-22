@@ -95,5 +95,20 @@ namespace Labour.MS.Adapter.Api.Controllers.Establishment
         {
             return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveAllAadhaarCardDetailsAsync());
         }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IApiResponse<EstablishmentCardDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<EstablishmentCardDetailsResponse>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
+        [Route(ApiInfoConstant.EstablishmentDashboardCardDetails)]
+        public async Task<IActionResult> RetrieveEstablishmentDashboardCardDetails()
+        {
+            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveDashboardCardDetailsAsync());
+        }
     }
 }

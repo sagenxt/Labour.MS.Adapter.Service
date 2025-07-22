@@ -212,5 +212,30 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             }
         }
 
+        public async Task<IApiResponse<WorkerCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync()
+        {
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} started");
+            try
+            {
+                var response = await this._workerRepository.GetDashboardCardDetailsAsync();
+
+                if (response.HasErrors())
+                {
+                    this._logger.LogWarning("Error occurred while retrieving worker card details.");
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerCardDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDashboardCardDetailsAsync));
+                }
+
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} completed");
+                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"An exception occurred while retrieving worker card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerCardDetailsResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(RetrieveDashboardCardDetailsAsync));
+            }
+        }
+
     }
 }

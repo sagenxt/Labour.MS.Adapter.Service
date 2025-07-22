@@ -42,7 +42,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Cities,
+                        ProcedureName = DbConstants.GET_CITIES,
                         Parameters = new List<ParameterConfig>()
                         {
                         }
@@ -69,7 +69,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Cities,
+                        ProcedureName = DbConstants.GET_CITIES,
                         Parameters = new List<ParameterConfig>()
                             {
                                 new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=cityId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
@@ -97,7 +97,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Cities,
+                        ProcedureName = DbConstants.GET_CITIES,
                         Parameters = new List<ParameterConfig>()
                         {
                             new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=null, DataType=DbType.Int64, Direction=ParameterDirection.Input },

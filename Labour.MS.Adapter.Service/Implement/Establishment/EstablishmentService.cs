@@ -210,5 +210,30 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             }
         }
 
+        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync()
+        {
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} started");
+            try
+            {
+                var response = await this._establishmentRepository.GetDashboardCardDetailsAsync();
+
+                if (response.HasErrors())
+                {
+                    this._logger.LogWarning("Error occurred while retrieving establishment card details.");
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentCardDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDashboardCardDetailsAsync));
+                }
+
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} completed");
+                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"An exception occurred while retrieving establishment card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentCardDetailsResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(RetrieveDashboardCardDetailsAsync));
+            }
+        }
+
     }
 }

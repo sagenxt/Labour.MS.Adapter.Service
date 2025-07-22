@@ -12,11 +12,37 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string Version = "v1";
         public const string SubBasePath = "services";
         public const string Adapter = "adapter";
+
+        #region "Establishment routes"
+
         public const string EstablishmentRegister = "establishment/register";
         public const string EstablishmentDetails = "establishment/details";
         public const string EstablishmentAllDetails = "establishment/alldetails";
         public const string EstablishmentLogin = "establishment/login";
         public const string WorkerAllAadhaarCardDetails = "establishment/allaadhaarcarddetails";
+        public const string EstablishmentDashboardCardDetails = "establishment/dashboard/carddetails";
+
+        #endregion
+
+        #region "Worker routes"
+
+        public const string WorkerRegister = "worker/register";
+        public const string WorkerDetailsById = "worker/detailsbyid";
+        public const string WorkerAllDetails = "worker/alldetails";
+        public const string WorkerDetailsByEstablishmentId = "worker/detailsbyestablishmentid";
+        public const string WorkerLogin = "worker/login";
+        public const string WorkerDashboardCardDetails = "worker/dashboard/carddetails";
+
+        #endregion
+
+        #region "Department routes"
+
+        public const string DepartmentLogin = "department/login";
+        public const string DepartmentDashboardCardDetails = "department/dashboard/carddetails";
+
+        #endregion
+
+        #region "Master routes"
 
         public const string VillagesAreasAllDetails = "villagesareas/details";
         public const string VillageAreaDetailsById = "villagesareas/detailsbyId";
@@ -30,11 +56,8 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string DistrictDetailsById = "districts/detailsbyId";
         public const string DistrictsDetailsByStateId = "districts/districtsdetailsbystateid";
 
-        public const string WorkerRegister = "worker/register";
-        public const string WorkerDetailsById = "worker/detailsbyid";
-        public const string WorkerAllDetails = "worker/alldetails";
-        public const string WorkerDetailsByEstablishmentId = "worker/detailsbyestablishmentid";
-        public const string WorkerLogin = "worker/login";
+        #endregion
+
 
         #region "Application Connection String Name/Key"
 

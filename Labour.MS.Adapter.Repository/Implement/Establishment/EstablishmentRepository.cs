@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Core.ApiResponse.Interface;
+﻿using Core.ApiResponse.Interface;
 using Core.MSSQL.DataAccess;
 using Labour.MS.Adapter.Models.DTOs.Request.Establishment;
 using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
@@ -9,6 +8,7 @@ using Labour.MS.Adapter.Utility;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Data;
 
 namespace Labour.MS.Adapter.Repository.Implement.Establishment
 {
@@ -200,6 +200,33 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                 return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllEstablishmentDetailsAsync));
+            }
+        }
+
+        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> GetDashboardCardDetailsAsync()
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_GET_ESTABLISHMENT_CARD_DETAILS,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<EstablishmentCardDetailsResponse?>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving establishment dashboard card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentCardDetailsResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(GetDashboardCardDetailsAsync));
             }
         }
     }

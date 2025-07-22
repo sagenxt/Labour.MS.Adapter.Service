@@ -50,7 +50,7 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
             return this._apiResponseFactory.CreateResponse(await this._workerService.PersistWorkerDetailsAsync(workerDetailsRequest));
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(IApiResponse<WorkerDetailsResponse>), StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<WorkerDetailsResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
@@ -60,12 +60,12 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.WorkerDetailsById)]
-        public async Task<IActionResult> RetrieveWorkerDetailsById([FromBody] long workerId)
+        public async Task<IActionResult> RetrieveWorkerDetailsById([FromQuery] long workerId)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveWorkerDetailsByIdAsync(workerId));
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(IApiResponse<WorkerDetailsResponse>), StatusCodes.Status200OK)]
         [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<WorkerDetailsResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
@@ -75,7 +75,7 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.WorkerDetailsByEstablishmentId)]
-        public async Task<IActionResult> RetrieveWorkersByEstablishmentId([FromBody] long establishmentId)
+        public async Task<IActionResult> RetrieveWorkersByEstablishmentId([FromQuery] long establishmentId)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveWorkersByEstablishmentIdAsync(establishmentId));
         }
@@ -93,6 +93,21 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         public async Task<IActionResult> WorkerLogin([FromBody] WorkerLoginRequest workerLoginRequest)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveWorkerLoginDetailsAsync(workerLoginRequest));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IApiResponse<WorkerCardDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<WorkerCardDetailsResponse>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
+        [Route(ApiInfoConstant.WorkerDashboardCardDetails)]
+        public async Task<IActionResult> RetrieveWorkerDashboardCardDetails()
+        {
+            return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveDashboardCardDetailsAsync());
         }
     }
 }
