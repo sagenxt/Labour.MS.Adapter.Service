@@ -229,5 +229,42 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                     nameof(GetDashboardCardDetailsAsync));
             }
         }
+
+        public async Task<IApiResponse<EstablishmentWorkerDetailPersistResponse?>> SaveWorkerDetailsByEstablishmentAsync(EstablishmentWorkerDetailsRequest request)
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_PERSIST_WORKER_DETAILS_BY_ESTABLISHMENT,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTMT_WORKER_ID, ParameterValue=request.EstmtWorkerId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTABLISHMENT_ID, ParameterValue=request.EstablishmentId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=request.WorkerId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_AADHAAR_CARD_NUMBER, ParameterValue=request.AadhaarCardNumber, DataType=DbType.String, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKING_FROM_DATE, ParameterValue=request.WorkingFromDate, DataType=DbType.Date, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKING_TO_DATE, ParameterValue=request.WorkingToDate, DataType=DbType.Date, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_STATUS, ParameterValue=request.Status, DataType=DbType.String, Direction=ParameterDirection.Input },
+
+                            new ParameterConfig { ParameterName=DbConstants.P_STATUS_CODE, ParameterValue=0, DataType=DbType.Int32, Direction=ParameterDirection.Output, Size=2000},
+                            new ParameterConfig { ParameterName=DbConstants.P_MESSAGE, ParameterValue=null, DataType=DbType.String, Direction=ParameterDirection.Output, Size=2000 }
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<EstablishmentWorkerDetailPersistResponse>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while saving worker details by establishment.");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentWorkerDetailPersistResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(SaveWorkerDetailsByEstablishmentAsync));
+            }
+        }
     }
 }

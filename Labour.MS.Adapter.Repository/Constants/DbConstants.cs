@@ -44,6 +44,10 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string P_IS_ACCEPTED_TERMS_CONDITIONS = "Is_Accepted_Terms_Conditions";
 
 
+        public const string P_ESTMT_WORKER_ID = "Estmt_Worker_Id";
+        public const string P_WORKING_FROM_DATE = "Working_From_Date";
+        public const string P_WORKING_TO_DATE = "Working_To_Date";
+        public const string P_STATUS = "Status";
 
         #endregion
 
@@ -53,8 +57,8 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_GET_ESTABLISHMENT_DETAILS = "usp_Get_Establishment_Details";
         public const string USP_GET_ESTABLISHMENT_LOGIN_DETAILS = "usp_Get_Establishment_Login_Details";
         public const string USP_GET_ESTABLISHMENT_CARD_DETAILS = "usp_Get_Establishment_Card_Details";
+        public const string USP_PERSIST_WORKER_DETAILS_BY_ESTABLISHMENT = "usp_Persist_Worker_Details_By_Establishment";
 
-        
         #endregion
 
         #endregion
