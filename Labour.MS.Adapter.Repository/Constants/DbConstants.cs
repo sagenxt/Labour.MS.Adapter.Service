@@ -52,18 +52,9 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_GET_ALL_ESTABLISHMENT_DETAILS = "usp_Get_All_Establishment_Details";
         public const string USP_GET_ESTABLISHMENT_DETAILS = "usp_Get_Establishment_Details";
         public const string USP_GET_ESTABLISHMENT_LOGIN_DETAILS = "usp_Get_Establishment_Login_Details";
+        public const string USP_GET_ESTABLISHMENT_CARD_DETAILS = "usp_Get_Establishment_Card_Details";
 
-        public const string USP_GET_ALL_WORKER_DETAILS = "usp_Get_All_Worker_Details";
-        public const string USP_GET_WORKER_DETAILS_BY_ID = "usp_Get_Worker_Details_By_Id";
-        public const string USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID = "usp_Get_Workers_By_Establishment_Id";
-        public const string USP_PERSIST_WORKER_DETAILS = "usp_Persist_Worker_Details";
-        public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
-
-        public const string USP_GET_ALL_AADHAAR_CARD_DETAILS = "usp_Get_All_Aadhaar_Card_Details";
-
-        public const string Get_Cities = "Get_Cities";
-        public const string Get_Districts = "Get_Districts";
-        public const string Get_Villages_Areas = "Get_Villages_Areas";
+        
         #endregion
 
         #endregion
@@ -112,11 +103,33 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string P_IS_NRES_MEMBER = "Is_NRES_Member";
         public const string P_IS_TRADE_UNION = "Is_Trade_Union";
         public const string P_TRADE_UNION_NUMBER = "Trade_Union_Number";
-       
-        #endregion
 
         #endregion
 
+        #region "Stored Procedure Names"
+
+        public const string USP_GET_ALL_WORKER_DETAILS = "usp_Get_All_Worker_Details";
+        public const string USP_GET_WORKER_DETAILS_BY_ID = "usp_Get_Worker_Details_By_Id";
+        public const string USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID = "usp_Get_Workers_By_Establishment_Id";
+        public const string USP_PERSIST_WORKER_DETAILS = "usp_Persist_Worker_Details";
+        public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
+        public const string USP_GET_ALL_AADHAAR_CARD_DETAILS = "usp_Get_All_Aadhaar_Card_Details";
+        public const string USP_GET_WORKER_CARD_DETAILS = "usp_Get_Worker_Card_Details";
+
+        #endregion
+
+        #endregion
+
+        #region "Department"
+
+        #region "Stored Procedure Names"
+
+        public const string USP_GET_DEPARTMENT_LOGIN_DETAILS = "usp_Get_Department_Login_Details";
+        public const string USP_GET_DEPARTMENT_CARD_DETAILS = "usp_Get_Department_Card_Details";
+
+        #endregion
+
+        #endregion
 
         #region "Common Stored Procedure Parameters"
 
@@ -126,6 +139,16 @@ namespace Labour.MS.Adapter.Repository.Constants
 
         #endregion
 
+        #region "Masters"
 
+        #region "Stored Procedure Names"
+
+        public const string GET_CITIES = "Get_Cities";
+        public const string GET_DISTRICTS = "Get_Districts";
+        public const string GET_VILLAGES_AREAS = "Get_Villages_Areas";
+
+        #endregion
+
+        #endregion
     }
 }

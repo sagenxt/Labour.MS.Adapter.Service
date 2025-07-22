@@ -42,7 +42,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Villages_Areas,
+                        ProcedureName = DbConstants.GET_VILLAGES_AREAS,
                         Parameters = new List<ParameterConfig>()
                         {
                         }
@@ -69,7 +69,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Villages_Areas,
+                        ProcedureName = DbConstants.GET_VILLAGES_AREAS,
                         Parameters = new List<ParameterConfig>()
                             {
                                 new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=villageAreaId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
@@ -97,7 +97,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.Get_Villages_Areas,
+                        ProcedureName = DbConstants.GET_VILLAGES_AREAS,
                         Parameters = new List<ParameterConfig>()
                         {
                             new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=null, DataType=DbType.Int64, Direction=ParameterDirection.Input },

@@ -11,5 +11,6 @@ namespace Labour.MS.Adapter.Repository.Interface.Establishment
         Task<IApiResponse<EstablishmentPersistResponse?>> SaveEstablishmentDetailsAsync(EstablishmentDetailsRequest request);
         Task<IApiResponse<EstablishmentLoginResponse?>> GetEstablishmentLoginDetailsAsync(EstablishmentLoginRequest request);
         Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> GetAllAadhaarCardDetailsAsync();
+        Task<IApiResponse<EstablishmentCardDetailsResponse?>> GetDashboardCardDetailsAsync();
     }
 }

@@ -1,22 +1,14 @@
 ﻿using Core.ApiResponse.Interface;
 using Core.MSSQL.DataAccess;
-using Labour.MS.Adapter.Models.DTOs.Request.Establishment;
 using Labour.MS.Adapter.Models.DTOs.Request.Worker;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
 using Labour.MS.Adapter.Models.DTOs.Response.Worker;
 using Labour.MS.Adapter.Repository.Constants;
-using Labour.MS.Adapter.Repository.Implement.Establishment;
 using Labour.MS.Adapter.Repository.Interface.Worker;
 using Labour.MS.Adapter.Utility;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Repository.Implement.Worker
 {
@@ -27,7 +19,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
         private readonly IApiResponseFactory _apiResponseFactory;
         private readonly IWrapperDbContext _wrapperDbContext;
         public WorkerRepository(IConfiguration configuration,
-                                        ILogger<EstablishmentRepository> logger,
+                                        ILogger<WorkerRepository> logger,
                                         IApiResponseFactory apiResponseFactory,
                                         IWrapperDbContext wrapperDbContext) 
         {
@@ -214,6 +206,33 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                 return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerLoginResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetWorkerDetailsByIdAsync));
+            }
+        }
+
+        public async Task<IApiResponse<WorkerCardDetailsResponse?>> GetDashboardCardDetailsAsync()
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_GET_WORKER_CARD_DETAILS,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<WorkerCardDetailsResponse?>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving worker dashboard card details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerCardDetailsResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(GetDashboardCardDetailsAsync));
             }
         }
 
