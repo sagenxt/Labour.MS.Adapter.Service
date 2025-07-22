@@ -3,7 +3,6 @@ using Core.ApiResponse.Interface;
 using FluentValidation;
 using Labour.MS.Adapter.Models.DTOs.Request.Department;
 using Labour.MS.Adapter.Models.DTOs.Response.Department;
-using Labour.MS.Adapter.Models.DTOs.Response.Worker;
 using Labour.MS.Adapter.Repository.Interface.Department;
 using Labour.MS.Adapter.Service.Interface.Department;
 using Labour.MS.Adapter.Utility;
@@ -20,13 +19,13 @@ namespace Labour.MS.Adapter.Service.Implement.Department
         private readonly IValidator<DepartmentLoginRequest> _departmentLoginRequestValidator;
         private readonly IDepartmentRepository _departmentRepository;
 
-        public DepartmentService(ILogger logger, 
+        public DepartmentService(ILoggerFactory loggerFactory, 
                                     IMapper mapper, 
                                     IApiResponseFactory apiResponseFactory, 
                                     IValidator<DepartmentLoginRequest> departmentLoginRequestValidator, 
                                     IDepartmentRepository departmentRepository)
         {
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<DepartmentService>();
             _mapper = mapper;
             _apiResponseFactory = apiResponseFactory;
             _departmentLoginRequestValidator = departmentLoginRequestValidator;

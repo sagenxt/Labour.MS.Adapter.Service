@@ -57,6 +57,7 @@ namespace Labour.MS.Adapter.Api.Extensions
             services.AddScoped<IValidator<EstablishmentDetailsRequest>, EstablishmentRequestDetailValidator>();
             services.AddScoped<IValidator<EstablishmentRequest>, EstablishmentRequestValidator>();
             services.AddScoped<IValidator<EstablishmentLoginRequest>, EstablishmentLoginRequestValidator>();
+            services.AddScoped<IValidator<EstablishmentWorkerDetailsRequest>, EstablishmentWorkerDetailsRequestValidator>();
 
             services.AddScoped<IVillageAreaService, VillageAreaService>();
             services.AddScoped<IVillageAreaRepository, VillageAreaRepository>();

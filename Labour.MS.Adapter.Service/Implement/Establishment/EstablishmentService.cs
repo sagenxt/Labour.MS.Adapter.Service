@@ -19,6 +19,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
         private readonly IValidator<EstablishmentDetailsRequest> _establishmentRequestDetailValidator;
         private readonly IValidator<EstablishmentRequest> _establishmentRequestValidator;
         private readonly IValidator<EstablishmentLoginRequest> _establishmentLoginRequestValidator;
+        private readonly IValidator<EstablishmentWorkerDetailsRequest> _establishmentWorkerDetailsRequestValidator;
         private readonly IEstablishmentRepository _establishmentRepository;
         public EstablishmentService(ILoggerFactory loggerFactory,
                             IMapper mapper,
@@ -26,6 +27,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                             IValidator<EstablishmentDetailsRequest> establishmentRequestDetailValidator,
                             IValidator<EstablishmentRequest> establishmentRequestValidator,
                             IValidator<EstablishmentLoginRequest> establishmentLoginRequestValidator,
+                            IValidator<EstablishmentWorkerDetailsRequest> establishmentWorkerDetailsRequestValidator,
                             IEstablishmentRepository establishmentRepository)
         {
             this._logger = loggerFactory.CreateLogger<EstablishmentService>();
@@ -34,6 +36,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             this._establishmentRequestDetailValidator = establishmentRequestDetailValidator;
             this._establishmentRequestValidator = establishmentRequestValidator;
             this._establishmentLoginRequestValidator = establishmentLoginRequestValidator;
+            this._establishmentWorkerDetailsRequestValidator = establishmentWorkerDetailsRequestValidator;
             this._establishmentRepository = establishmentRepository;
         }
 
@@ -130,7 +133,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 }
                 else
                 {
-                    this._logger.LogWarning("Error occurred while saving establishment info.");
+                    this._logger.LogWarning("Error occurred while persisting establishment info.");
                     return this._apiResponseFactory.BadRequestApiResponse<EstablishmentPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistEstablishmentInfoAsync));
                 }
             }
@@ -232,6 +235,51 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentCardDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveDashboardCardDetailsAsync));
+            }
+        }
+
+        public async Task<IApiResponse<EstablishmentWorkerDetailPersistResponse?>> PersistWorkerDetailsByEstablishmentAsync(EstablishmentWorkerDetailsRequest request)
+        {
+            this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsByEstablishmentAsync)} started");
+            var establishmentResponse = new EstablishmentPersistResponse();
+            try
+            {
+                var validationResult = await this._establishmentWorkerDetailsRequestValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    string errorMessage = string.Empty;
+                    foreach (var error in validationResult.Errors)
+                    {
+                        errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
+                    }
+                    this._logger.LogWarning(string.Format(WarningMessages.InvalidEstablishmentRequestDetails, errorMessage));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentWorkerDetailPersistResponse?>(string.Format(WarningMessages.InvalidEstablishmentRequestDetails, errorMessage), nameof(PersistWorkerDetailsByEstablishmentAsync));
+                }
+                var response = await this._establishmentRepository.SaveWorkerDetailsByEstablishmentAsync(request);
+
+                if (!response.HasErrors())
+                {
+                    if (response.Data != null && response.Data.StatusCode != 200)
+                    {
+                        this._logger.LogWarning(response.Data.Message);
+                        return this._apiResponseFactory.BadRequestApiResponse<EstablishmentWorkerDetailPersistResponse?>(response.Data.Message ?? "Unknown error", nameof(PersistWorkerDetailsByEstablishmentAsync));
+                    }
+
+                    this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsByEstablishmentAsync)} completed");
+                    return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+                }
+                else
+                {
+                    this._logger.LogWarning("Error occurred while persisting worker details by establishment.");
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentWorkerDetailPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerDetailsByEstablishmentAsync));
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "An exception occurred in persisting worker details by establishment.");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentWorkerDetailPersistResponse?>(
+                    "An unexpected error occurred while processing the request.",
+                    nameof(PersistWorkerDetailsByEstablishmentAsync));
             }
         }
 
