@@ -1,21 +1,11 @@
 ﻿using AutoMapper;
 using Core.ApiResponse.Interface;
 using FluentValidation;
-using Labour.MS.Adapter.Models.Data.Masters;
-using Labour.MS.Adapter.Models.DTOs.Request.Establishment;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
-using Labour.MS.Adapter.Repository.Interface.Establishment;
-using Labour.MS.Adapter.Service.Implement.Establishment;
-using Labour.MS.Adapter.Service.Interface.Establishment;
-using Labour.MS.Adapter.Service.Interface.Masters;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 using Labour.MS.Adapter.Repository.Interface.Masters;
-using Labour.MS.Adapter.Utility.Constants;
+using Labour.MS.Adapter.Service.Implement.Establishment;
+using Labour.MS.Adapter.Service.Interface.Masters;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Service.Implement.Masters
 {
@@ -38,7 +28,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
         }
 
 
-        public async Task<IApiResponse<IEnumerable<DistrictResponse?>>> RetrieveAllDistrictsDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> RetrieveAllDistrictsDetailsAsync()
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveAllDistrictsDetailsAsync)} started");
             try
@@ -48,7 +38,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving districts details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictResponse?>>("" ?? "Unknown error", nameof(RetrieveAllDistrictsDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveAllDistrictsDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllDistrictsDetailsAsync)} completed");
@@ -57,13 +47,13 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving districts details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveAllDistrictsDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<DistrictResponse?>> RetrieveDistrictDetailsByIdAsync(string districtId)
+        public async Task<IApiResponse<DistrictDetailsResponse?>> RetrieveDistrictDetailsByIdAsync(int districtId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictDetailsByIdAsync)} started");
             try
@@ -74,7 +64,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<DistrictResponse?>("" ?? "Unknown error", nameof(RetrieveDistrictDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<DistrictDetailsResponse?>("" ?? "Unknown error", nameof(RetrieveDistrictDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictDetailsByIdAsync)} completed");
@@ -83,13 +73,13 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving district details based on distict id: {districtId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<DistrictResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<DistrictDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveDistrictDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<DistrictResponse?>>> RetrieveDistrictsDetailsByStateIdAsync(string stateId)
+        public async Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> RetrieveDistrictsDetailsByStateIdAsync(int stateId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictsDetailsByStateIdAsync)} started");
             try
@@ -99,7 +89,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictResponse?>>("" ?? "Unknown error", nameof(RetrieveDistrictsDetailsByStateIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveDistrictsDetailsByStateIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictsDetailsByStateIdAsync)} completed");
@@ -108,7 +98,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving districts details based on state id: {stateId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse <IEnumerable<DistrictResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse <IEnumerable<DistrictDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveDistrictsDetailsByStateIdAsync));
             }

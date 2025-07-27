@@ -1,8 +1,6 @@
 ﻿using Core.ApiResponse.Interface;
 using Labour.MS.Adapter.Api.Controllers.BaseController;
-using Labour.MS.Adapter.Models.Data.Masters;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
-using Labour.MS.Adapter.Service.Interface.Establishment;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 using Labour.MS.Adapter.Service.Interface.Masters;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.AspNetCore.Mvc;
@@ -22,8 +20,8 @@ namespace Labour.MS.Adapter.Api.Controllers.Masters
             this._villageAreaService = villageAreaService;
         }
         [HttpGet]
-        [ProducesResponseType(typeof(IApiResponse<VillageAreaResponse>), StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaResponse>))]
+        [ProducesResponseType(typeof(IApiResponse<VillageAreaDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaDetailsResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
@@ -37,8 +35,8 @@ namespace Labour.MS.Adapter.Api.Controllers.Masters
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(IApiResponse<VillageAreaResponse>), StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaResponse>))]
+        [ProducesResponseType(typeof(IApiResponse<VillageAreaDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaDetailsResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
@@ -46,14 +44,14 @@ namespace Labour.MS.Adapter.Api.Controllers.Masters
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.VillageAreaDetailsById)]
-        public async Task<IActionResult> RetrieveVillageAreaDetailsById([FromQuery]  string villageAreaId)
+        public async Task<IActionResult> RetrieveVillageAreaDetailsById([FromQuery] int villageAreaId)
         {
             return this._apiResponseFactory.CreateResponse(await this._villageAreaService.RetrieveVillageAreaDetailsByIdAsync(villageAreaId));
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(IApiResponse<VillageAreaResponse>), StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaResponse>))]
+        [ProducesResponseType(typeof(IApiResponse<VillageAreaDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<VillageAreaDetailsResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
@@ -61,7 +59,7 @@ namespace Labour.MS.Adapter.Api.Controllers.Masters
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.VillagesAreasDetailsByCityId)]
-        public async Task<IActionResult> RetrieveVillageAreaDetailsByCityId([FromQuery]  string cityId)
+        public async Task<IActionResult> RetrieveVillageAreaDetailsByCityId([FromQuery] int cityId)
         {
             return this._apiResponseFactory.CreateResponse(await this._villageAreaService.RetrieveVillageAreaDetailsByCityIdAsync(cityId));
         }

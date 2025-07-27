@@ -1,18 +1,12 @@
-﻿using Core.ApiResponse.Implementation;
-using Core.ApiResponse.Interface;
+﻿using Core.ApiResponse.Interface;
 using Core.MSSQL.DataAccess;
-using Labour.MS.Adapter.Models.Data.Masters;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 using Labour.MS.Adapter.Repository.Constants;
 using Labour.MS.Adapter.Repository.Interface.Masters;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Repository.Implement.Masters
 {
@@ -33,7 +27,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
             _apiResponseFactory = apiResponseFactory;
             _wrapperDbContext = wrapperDbContext;
         }
-        public async Task<IApiResponse<IEnumerable<DistrictResponse?>>> GetAllDistrictsDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> GetAllDistrictsDetailsAsync()
         {
             try
             {
@@ -48,19 +42,19 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<DistrictResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<DistrictDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving districts details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllDistrictsDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<DistrictResponse?>> GetDistrictDetailsByIdAsync(string districtId)
+        public async Task<IApiResponse<DistrictDetailsResponse?>> GetDistrictDetailsByIdAsync(int districtId)
         {
             try
             {
@@ -72,23 +66,23 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_DISTRICTS,
                         Parameters = new List<ParameterConfig>()
                             {
-                                new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=districtId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                                new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=districtId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<DistrictResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<DistrictDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving distict details based on district id: {districtId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<DistrictResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<DistrictDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetDistrictDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<DistrictResponse?>>> GetDistrictsDetailsByStateIdAsync(string stateId)
+        public async Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> GetDistrictsDetailsByStateIdAsync(int stateId)
         {
             try
             {
@@ -100,20 +94,20 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_DISTRICTS,
                         Parameters = new List<ParameterConfig>()
                         {
-                            new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=null, DataType=DbType.Int64, Direction=ParameterDirection.Input },
-                            new ParameterConfig { ParameterName = DbConstants.P_STATE_ID, ParameterValue=stateId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                            new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=null, DataType=DbType.Int32, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_STATE_ID, ParameterValue=stateId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
 
 
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<DistrictResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<DistrictDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving districts by state id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<DistrictDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetDistrictsDetailsByStateIdAsync));
             }

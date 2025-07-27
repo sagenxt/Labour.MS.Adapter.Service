@@ -1,19 +1,12 @@
 ﻿using Core.ApiResponse.Interface;
-using Labour.MS.Adapter.Models.Data.Masters;
-using Labour.MS.Adapter.Models.DTOs.Request.Establishment;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 
 namespace Labour.MS.Adapter.Repository.Interface.Masters
 {
     public interface ICitiesRepository
     {
-        Task<IApiResponse<IEnumerable<CityResponse?>>> GetAllCitiesDetailsAsync();
-        Task<IApiResponse<CityResponse?>> GetCityDetailsByIdAsync(string cityId);
-        Task<IApiResponse<IEnumerable<CityResponse?>>> GetAllCitiesDetailsByDistrictIdAsync(string districtId);
+        Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> GetAllCitiesDetailsAsync();
+        Task<IApiResponse<CityDetailsResponse?>> GetCityDetailsByIdAsync(int cityId);
+        Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> GetAllCitiesDetailsByDistrictIdAsync(int districtId);
     }
 }
