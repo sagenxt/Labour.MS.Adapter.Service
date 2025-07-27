@@ -1,18 +1,13 @@
 ﻿using Core.ApiResponse.Interface;
-using Labour.MS.Adapter.Models.Data.Masters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 
 namespace Labour.MS.Adapter.Service.Interface.Masters
 {
     public interface IDistrictsService
     {
-        Task<IApiResponse<IEnumerable<DistrictResponse?>>> RetrieveAllDistrictsDetailsAsync();
-        Task<IApiResponse<DistrictResponse?>> RetrieveDistrictDetailsByIdAsync(string cityId);
-        Task<IApiResponse<IEnumerable<DistrictResponse?>>> RetrieveDistrictsDetailsByStateIdAsync(string districtId);
+        Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> RetrieveAllDistrictsDetailsAsync();
+        Task<IApiResponse<DistrictDetailsResponse?>> RetrieveDistrictDetailsByIdAsync(int cityId);
+        Task<IApiResponse<IEnumerable<DistrictDetailsResponse?>>> RetrieveDistrictsDetailsByStateIdAsync(int districtId);
         
     }
 }

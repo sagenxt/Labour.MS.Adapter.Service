@@ -1,18 +1,12 @@
-﻿using Core.ApiResponse.Implementation;
-using Core.ApiResponse.Interface;
+﻿using Core.ApiResponse.Interface;
 using Core.MSSQL.DataAccess;
-using Labour.MS.Adapter.Models.Data.Masters;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 using Labour.MS.Adapter.Repository.Constants;
 using Labour.MS.Adapter.Repository.Interface.Masters;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Repository.Implement.Masters
 {
@@ -33,7 +27,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
             _apiResponseFactory = apiResponseFactory;
             _wrapperDbContext = wrapperDbContext;
         }
-        public async Task<IApiResponse<IEnumerable<CityResponse?>>> GetAllCitiesDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> GetAllCitiesDetailsAsync()
         {
             try
             {
@@ -48,19 +42,19 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<CityResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<CityDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving cities details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllCitiesDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<CityResponse?>> GetCityDetailsByIdAsync(string cityId)
+        public async Task<IApiResponse<CityDetailsResponse?>> GetCityDetailsByIdAsync(int cityId)
         {
             try
             {
@@ -72,23 +66,23 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_CITIES,
                         Parameters = new List<ParameterConfig>()
                             {
-                                new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=cityId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                                new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=cityId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<CityResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<CityDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving city details based on city id: {cityId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<CityResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<CityDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetCityDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<CityResponse?>>> GetAllCitiesDetailsByDistrictIdAsync(string districtId)
+        public async Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> GetAllCitiesDetailsByDistrictIdAsync(int districtId)
         {
             try
             {
@@ -100,20 +94,20 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_CITIES,
                         Parameters = new List<ParameterConfig>()
                         {
-                            new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=null, DataType=DbType.Int64, Direction=ParameterDirection.Input },
-                            new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=districtId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                            new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=null, DataType=DbType.Int32, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_DISTRICT_ID, ParameterValue=districtId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
 
 
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<CityResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<CityDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving cities by district id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllCitiesDetailsByDistrictIdAsync));
             }

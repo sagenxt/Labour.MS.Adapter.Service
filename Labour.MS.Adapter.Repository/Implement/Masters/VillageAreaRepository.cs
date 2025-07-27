@@ -1,18 +1,12 @@
-﻿using Core.ApiResponse.Implementation;
-using Core.ApiResponse.Interface;
+﻿using Core.ApiResponse.Interface;
 using Core.MSSQL.DataAccess;
-using Labour.MS.Adapter.Models.Data.Masters;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 using Labour.MS.Adapter.Repository.Constants;
 using Labour.MS.Adapter.Repository.Interface.Masters;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Repository.Implement.Masters
 {
@@ -33,7 +27,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
             _apiResponseFactory = apiResponseFactory;
             _wrapperDbContext = wrapperDbContext;
         }
-        public async Task<IApiResponse<IEnumerable<VillageAreaResponse?>>> GetAllVillagesAreasDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<VillageAreaDetailsResponse?>>> GetAllVillagesAreasDetailsAsync()
         {
             try
             {
@@ -48,19 +42,19 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<VillageAreaResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<VillageAreaDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving villages-areas details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<VillageAreaResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<VillageAreaDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllVillagesAreasDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<VillageAreaResponse?>> GetVillageAreaDetailsByIdAsync(string villageAreaId)
+        public async Task<IApiResponse<VillageAreaDetailsResponse?>> GetVillageAreaDetailsByIdAsync(int villageAreaId)
         {
             try
             {
@@ -72,23 +66,23 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_VILLAGES_AREAS,
                         Parameters = new List<ParameterConfig>()
                             {
-                                new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=villageAreaId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                                new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=villageAreaId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<VillageAreaResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<VillageAreaDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving village-area details based on village-area id: {villageAreaId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<VillageAreaResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<VillageAreaDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetVillageAreaDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<VillageAreaResponse?>>> GetAllVillagesAreasDetailsByCityIdAsync(string cityId)
+        public async Task<IApiResponse<IEnumerable<VillageAreaDetailsResponse?>>> GetAllVillagesAreasDetailsByCityIdAsync(int cityId)
         {
             try
             {
@@ -100,18 +94,18 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                         ProcedureName = DbConstants.GET_VILLAGES_AREAS,
                         Parameters = new List<ParameterConfig>()
                         {
-                            new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=null, DataType=DbType.Int64, Direction=ParameterDirection.Input },
-                            new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=cityId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                            new ParameterConfig { ParameterName = DbConstants.P_VILLAGE_AREA_ID, ParameterValue=null, DataType=DbType.Int32, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_CITY_ID, ParameterValue=cityId, DataType=DbType.Int32, Direction=ParameterDirection.Input }
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<VillageAreaResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<VillageAreaDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving villages-areas by city id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<VillageAreaResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<VillageAreaDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAllVillagesAreasDetailsByCityIdAsync));
             }

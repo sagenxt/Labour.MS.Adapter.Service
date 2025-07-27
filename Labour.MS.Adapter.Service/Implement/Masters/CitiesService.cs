@@ -2,20 +2,11 @@
 using Core.ApiResponse.Interface;
 using FluentValidation;
 using Labour.MS.Adapter.Models.Data.Masters;
-using Labour.MS.Adapter.Models.DTOs.Request.Establishment;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
-using Labour.MS.Adapter.Repository.Interface.Establishment;
 using Labour.MS.Adapter.Service.Implement.Establishment;
-using Labour.MS.Adapter.Service.Interface.Establishment;
 using Labour.MS.Adapter.Service.Interface.Masters;
 using Labour.MS.Adapter.Repository.Interface.Masters;
-using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 
 namespace Labour.MS.Adapter.Service.Implement.Masters
 {
@@ -38,7 +29,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
         }
 
 
-        public async Task<IApiResponse<IEnumerable<CityResponse?>>> RetrieveAllCitiesDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> RetrieveAllCitiesDetailsAsync()
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveAllCitiesDetailsAsync)} started");
             try
@@ -48,7 +39,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<CityResponse?>>("" ?? "Unknown error", nameof(RetrieveAllCitiesDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<CityDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveAllCitiesDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllCitiesDetailsAsync)} completed");
@@ -57,13 +48,13 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving cities details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<CityDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveAllCitiesDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<CityResponse?>> RetrieveCityDetailsByIdAsync(string cityId)
+        public async Task<IApiResponse<CityDetailsResponse?>> RetrieveCityDetailsByIdAsync(int cityId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveCityDetailsByIdAsync)} started");
             try
@@ -74,7 +65,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<CityResponse?>("" ?? "Unknown error", nameof(RetrieveCityDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<CityDetailsResponse?>("" ?? "Unknown error", nameof(RetrieveCityDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveCityDetailsByIdAsync)} completed");
@@ -83,13 +74,13 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving city details based on city id: {cityId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<CityResponse?>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<CityDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveCityDetailsByIdAsync));
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<CityResponse?>>> RetrieveCityDetailsByDistrictIdAsync(string districtId)
+        public async Task<IApiResponse<IEnumerable<CityDetailsResponse?>>> RetrieveCityDetailsByDistrictIdAsync(int districtId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveCityDetailsByDistrictIdAsync)} started");
             try
@@ -99,7 +90,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<CityResponse?>>("" ?? "Unknown error", nameof(RetrieveCityDetailsByDistrictIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<CityDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveCityDetailsByDistrictIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveCityDetailsByDistrictIdAsync)} completed");
@@ -108,7 +99,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving city details based on district id: {districtId}");
-                return this._apiResponseFactory.InternalServerErrorApiResponse <IEnumerable<CityResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse <IEnumerable<CityDetailsResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveCityDetailsByDistrictIdAsync));
             }
