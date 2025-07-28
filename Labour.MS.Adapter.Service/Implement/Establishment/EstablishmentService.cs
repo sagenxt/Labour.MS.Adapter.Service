@@ -188,20 +188,20 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> RetrieveAllAadhaarCardDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> RetrieveAvailableAadhaarCardDetailsAsync()
         {
-            this._logger.LogInformation($"Method Name : {nameof(RetrieveAllAadhaarCardDetailsAsync)} started");
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveAvailableAadhaarCardDetailsAsync)} started");
             try
             {
-                var response = await this._establishmentRepository.GetAllAadhaarCardDetailsAsync();
+                var response = await this._establishmentRepository.GetAvailableAadhaarCardDetailsAsync();
 
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving all aadhaar card details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllAadhaarCardDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAvailableAadhaarCardDetailsAsync));
                 }
 
-                this._logger.LogInformation($"Method Name : {nameof(RetrieveAllAadhaarCardDetailsAsync)} completed");
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveAvailableAadhaarCardDetailsAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;
             }
             catch (Exception ex)
@@ -209,16 +209,16 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 this._logger.LogError(ex, $"An exception occurred while retrieving all aadhaar card details");
                 return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
-                    nameof(RetrieveAllAadhaarCardDetailsAsync));
+                    nameof(RetrieveAvailableAadhaarCardDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync()
+        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync(long establishmentId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} started");
             try
             {
-                var response = await this._establishmentRepository.GetDashboardCardDetailsAsync();
+                var response = await this._establishmentRepository.GetDashboardCardDetailsAsync(establishmentId);
 
                 if (response.HasErrors())
                 {
@@ -280,6 +280,31 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentWorkerDetailPersistResponse?>(
                     "An unexpected error occurred while processing the request.",
                     nameof(PersistWorkerDetailsByEstablishmentAsync));
+            }
+        }
+
+        public async Task<IApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>> RetrieveWorkersByEstablishmentIdAsync(long establishmentId)
+        {
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} started");
+            try
+            {
+                var response = await this._establishmentRepository.GetWorkersByEstablishmentIdAsync(establishmentId);
+
+                if (response.HasErrors())
+                {
+                    this._logger.LogWarning("Error occurred while retrieving workers by worker id.");
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkersByEstablishmentIdAsync));
+                }
+
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} completed");
+                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"An exception occurred while retrieving workers by worker id");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(RetrieveWorkersByEstablishmentIdAsync));
             }
         }
 

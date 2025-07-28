@@ -90,10 +90,10 @@ namespace Labour.MS.Adapter.Api.Controllers.Establishment
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
-        [Route(ApiInfoConstant.WorkerAllAadhaarCardDetails)]
-        public async Task<IActionResult> RetrieveAllAadhaarCardDetails()
+        [Route(ApiInfoConstant.WorkerAvailableAadhaarCardDetails)]
+        public async Task<IActionResult> RetrieveAvailableAadhaarCardDetails()
         {
-            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveAllAadhaarCardDetailsAsync());
+            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveAvailableAadhaarCardDetailsAsync());
         }
 
         [HttpGet]
@@ -106,9 +106,9 @@ namespace Labour.MS.Adapter.Api.Controllers.Establishment
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
         [Route(ApiInfoConstant.EstablishmentDashboardCardDetails)]
-        public async Task<IActionResult> RetrieveEstablishmentDashboardCardDetails()
+        public async Task<IActionResult> RetrieveEstablishmentDashboardCardDetails(long establishmentId)
         {
-            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveDashboardCardDetailsAsync());
+            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveDashboardCardDetailsAsync(establishmentId));
         }
 
         [HttpPost]
@@ -124,6 +124,21 @@ namespace Labour.MS.Adapter.Api.Controllers.Establishment
         public async Task<IActionResult> PersistWorkerDetailsByEstablishment([FromBody] EstablishmentWorkerDetailsRequest establishmentWorkerDetailsRequest)
         {
             return this._apiResponseFactory.CreateResponse(await this._establishmentService.PersistWorkerDetailsByEstablishmentAsync(establishmentWorkerDetailsRequest));
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(IApiResponse<EstablishmentWorkerDetailsResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<EstablishmentWorkerDetailsResponse>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
+        [Route(ApiInfoConstant.WorkerDetailsByEstablishmentId)]
+        public async Task<IActionResult> RetrieveWorkersByEstablishmentId([FromQuery] long establishmentId)
+        {
+            return this._apiResponseFactory.CreateResponse(await this._establishmentService.RetrieveWorkersByEstablishmentIdAsync(establishmentId));
         }
     }
 }

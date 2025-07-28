@@ -13,7 +13,7 @@ namespace Labour.MS.Adapter.Models.Data.Worker
         public string? ECardId { get; set; }
         public string? ESharmId { get; set; }
         public string? BoCWId { get; set; }
-        public string? Access_Card_Id { get; set; }
+        public string? AccessCardId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? MiddleName { get; set; }

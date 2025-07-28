@@ -56,8 +56,9 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_GET_ALL_ESTABLISHMENT_DETAILS = "usp_Get_All_Establishment_Details";
         public const string USP_GET_ESTABLISHMENT_DETAILS = "usp_Get_Establishment_Details";
         public const string USP_GET_ESTABLISHMENT_LOGIN_DETAILS = "usp_Get_Establishment_Login_Details";
-        public const string USP_GET_ESTABLISHMENT_CARD_DETAILS = "usp_Get_Establishment_Card_Details";
+        public const string USP_GET_DASHBOARD_CARDS_BY_ESTABLISHMENT = "usp_Get_DashBoard_Cards_By_Establishment";
         public const string USP_PERSIST_WORKER_DETAILS_BY_ESTABLISHMENT = "usp_Persist_Worker_Details_By_Establishment";
+        public const string USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID = "usp_Get_Workers_By_Establishment_Id";
 
         #endregion
 
@@ -114,10 +115,9 @@ namespace Labour.MS.Adapter.Repository.Constants
 
         public const string USP_GET_ALL_WORKER_DETAILS = "usp_Get_All_Worker_Details";
         public const string USP_GET_WORKER_DETAILS_BY_ID = "usp_Get_Worker_Details_By_Id";
-        public const string USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID = "usp_Get_Workers_By_Establishment_Id";
         public const string USP_PERSIST_WORKER_DETAILS = "usp_Persist_Worker_Details";
         public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
-        public const string USP_GET_ALL_AADHAAR_CARD_DETAILS = "usp_Get_All_Aadhaar_Card_Details";
+        public const string USP_GET_AVAILABLE_AADHAAR_CARD_DETAILS = "usp_Get_Available_Adhaar_Card_Details";
         public const string USP_GET_WORKER_CARD_DETAILS = "usp_Get_Worker_Card_Details";
 
         #endregion

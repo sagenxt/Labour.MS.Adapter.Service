@@ -176,7 +176,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> GetAllAadhaarCardDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> GetAvailableAadhaarCardDetailsAsync()
         {
             try
             {
@@ -185,7 +185,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.USP_GET_ALL_AADHAAR_CARD_DETAILS,
+                        ProcedureName = DbConstants.USP_GET_AVAILABLE_AADHAAR_CARD_DETAILS,
                         Parameters = new List<ParameterConfig>()
                         {
                         }
@@ -199,11 +199,11 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                 _logger.LogError(ex, $"Error occurred while retrieving aadhaar card details");
                 return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
-                    nameof(GetAllEstablishmentDetailsAsync));
+                    nameof(GetAvailableAadhaarCardDetailsAsync));
             }
         }
 
-        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> GetDashboardCardDetailsAsync()
+        public async Task<IApiResponse<EstablishmentCardDetailsResponse?>> GetDashboardCardDetailsAsync(long establishmentId)
         {
             try
             {
@@ -212,9 +212,10 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.USP_GET_ESTABLISHMENT_CARD_DETAILS,
+                        ProcedureName = DbConstants.USP_GET_DASHBOARD_CARDS_BY_ESTABLISHMENT,
                         Parameters = new List<ParameterConfig>()
                         {
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTABLISHMENT_ID, ParameterValue=establishmentId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
                         }
                     }
                 };
@@ -264,6 +265,34 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                 return this._apiResponseFactory.InternalServerErrorApiResponse<EstablishmentWorkerDetailPersistResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(SaveWorkerDetailsByEstablishmentAsync));
+            }
+        }
+
+        public async Task<IApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>> GetWorkersByEstablishmentIdAsync(long establishmentId)
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTABLISHMENT_ID, ParameterValue=establishmentId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<EstablishmentWorkerDetailsResponse?>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving workers details by establishment");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(GetWorkersByEstablishmentIdAsync));
             }
         }
     }

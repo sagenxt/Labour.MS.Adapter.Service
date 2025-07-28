@@ -19,9 +19,11 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string EstablishmentDetails = "establishment/details";
         public const string EstablishmentAllDetails = "establishment/alldetails";
         public const string EstablishmentLogin = "establishment/login";
-        public const string WorkerAllAadhaarCardDetails = "establishment/allaadhaarcarddetails";
+        public const string WorkerAvailableAadhaarCardDetails = "establishment/availableaadhaarcarddetails";
         public const string EstablishmentDashboardCardDetails = "establishment/dashboard/carddetails";
         public const string PersistWorkerDetailsByEstablishment = "establishment/persistworkerdetailsbyestablishment";
+        public const string WorkerDetailsByEstablishmentId = "establishment/workerdetails";
+
 
         #endregion
 
@@ -30,7 +32,6 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string WorkerRegister = "worker/register";
         public const string WorkerDetailsById = "worker/detailsbyid";
         public const string WorkerAllDetails = "worker/alldetails";
-        public const string WorkerDetailsByEstablishmentId = "worker/detailsbyestablishmentid";
         public const string WorkerLogin = "worker/login";
         public const string WorkerDashboardCardDetails = "worker/dashboard/carddetails";
 
