@@ -147,9 +147,12 @@ namespace Labour.MS.Adapter.Repository.Constants
 
         #region "Stored Procedure Names"
 
-        public const string GET_CITIES = "Get_Cities";
-        public const string GET_DISTRICTS = "Get_Districts";
-        public const string GET_VILLAGES_AREAS = "Get_Villages_Areas";
+        public const string USP_GET_CITIES = "usp_Get_Cities";
+        public const string USP_GET_DISTRICTS = "usp_Get_Districts";
+        public const string USP_GET_VILLAGES_AREAS = "usp_Get_Villages_Areas";
+
+        public const string USP_GET_ESTABLISHMENT_CATEGORIES = "usp_Get_Establishment_Categories";
+        public const string USP_GET_ESTABLISHMENT_WORK_NATURES = "usp_Get_Establishment_Work_Natures";
 
         #endregion
 

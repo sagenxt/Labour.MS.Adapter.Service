@@ -57,7 +57,17 @@ namespace Labour.MS.Adapter.Api.Extensions
             services.AddScoped<IValidator<EstablishmentDetailsRequest>, EstablishmentRequestDetailValidator>();
             services.AddScoped<IValidator<EstablishmentRequest>, EstablishmentRequestValidator>();
             services.AddScoped<IValidator<EstablishmentLoginRequest>, EstablishmentLoginRequestValidator>();
-            services.AddScoped<IValidator<EstablishmentWorkerDetailsRequest>, EstablishmentWorkerDetailsRequestValidator>();
+            services.AddScoped<IValidator<EstablishmentWorkerDetailsRequest>, EstablishmentWorkerDetailsRequestValidator>();          
+
+            services.AddScoped<IWorkerService, WorkerService>();
+            services.AddScoped<IWorkerRepository, WorkerRepository>();
+            services.AddScoped<IValidator<WorkerDetailsRequest>, WorkerDetailsRequestValidator>();
+            services.AddScoped<IValidator<WorkerLoginRequest>, WorkerLoginRequestValidator>();
+
+            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IValidator<DepartmentLoginRequest>, DepartmentLoginRequestValidator>();
+
 
             services.AddScoped<IVillageAreaService, VillageAreaService>();
             services.AddScoped<IVillageAreaRepository, VillageAreaRepository>();
@@ -68,15 +78,11 @@ namespace Labour.MS.Adapter.Api.Extensions
             services.AddScoped<IDistrictsService, DistrictsService>();
             services.AddScoped<IDistrictsRepository, DistrictsRepository>();
 
+            services.AddScoped<IEstablishmentCategoryService, EstablishmentCategoryService>();
+            services.AddScoped<IEstablishmentCategoryRepository, EstablishmentCategoryRepository>();
 
-            services.AddScoped<IWorkerService, WorkerService>();
-            services.AddScoped<IWorkerRepository, WorkerRepository>();
-            services.AddScoped<IValidator<WorkerDetailsRequest>, WorkerDetailsRequestValidator>();
-            services.AddScoped<IValidator<WorkerLoginRequest>, WorkerLoginRequestValidator>();
-
-            services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IValidator<DepartmentLoginRequest>, DepartmentLoginRequestValidator>();
+            services.AddScoped<IEstablishmentWorkNatureService, EstablishmentWorkNatureService>();
+            services.AddScoped<IEstablishmentWorkNatureRepository, EstablishmentWorkNatureRepository>();
 
 
             return services;

@@ -57,6 +57,9 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string DistrictDetailsById = "districts/detailsbyId";
         public const string DistrictsDetailsByStateId = "districts/districtsdetailsbystateid";
 
+        public const string EstablishmentCategoryDetails = "establishmentcategory/details";
+        public const string EstablishmentWorkNatureDetails = "establishmentworknature/details";
+
         #endregion
 
 
