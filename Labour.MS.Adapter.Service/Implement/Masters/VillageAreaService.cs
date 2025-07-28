@@ -37,7 +37,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving villages-areas details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<VillageAreaDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveAllVillagesAreasDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<VillageAreaDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllVillagesAreasDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllVillagesAreasDetailsAsync)} completed");
@@ -62,7 +62,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving village-area details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<VillageAreaDetailsResponse?>("" ?? "Unknown error", nameof(RetrieveVillageAreaDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<VillageAreaDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveVillageAreaDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveVillageAreaDetailsByIdAsync)} completed");
@@ -87,7 +87,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving villages-areas details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<VillageAreaDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveVillageAreaDetailsByCityIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<VillageAreaDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveVillageAreaDetailsByCityIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveVillageAreaDetailsByCityIdAsync)} completed");

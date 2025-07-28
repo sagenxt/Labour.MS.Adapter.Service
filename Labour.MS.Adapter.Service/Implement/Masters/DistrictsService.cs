@@ -38,7 +38,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving districts details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveAllDistrictsDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAllDistrictsDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAllDistrictsDetailsAsync)} completed");
@@ -64,7 +64,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<DistrictDetailsResponse?>("" ?? "Unknown error", nameof(RetrieveDistrictDetailsByIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<DistrictDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDistrictDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictDetailsByIdAsync)} completed");
@@ -89,7 +89,7 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>("" ?? "Unknown error", nameof(RetrieveDistrictsDetailsByStateIdAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<DistrictDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDistrictsDetailsByStateIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictsDetailsByStateIdAsync)} completed");
