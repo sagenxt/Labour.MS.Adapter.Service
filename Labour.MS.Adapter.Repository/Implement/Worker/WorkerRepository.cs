@@ -81,33 +81,6 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                     nameof(GetWorkerDetailsByIdAsync));
             }
         }
-        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> GetWorkersByEstablishmentIdAsync(long establishmentId)
-        {
-            try
-            {
-                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
-                {
-                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
-                    SPConfigData = new StoredProcedureConfig()
-                    {
-                        ProcedureName = DbConstants.USP_GET_WORKER_DETAILS_BY_ESTABLISHMENT_ID,
-                        Parameters = new List<ParameterConfig>()
-                        {
-                            new ParameterConfig { ParameterName = DbConstants.P_ESTABLISHMENT_ID, ParameterValue=establishmentId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
-                        }
-                    }
-                };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerDetailsResponse?>(dbStructureConfigData);
-                return this._apiResponseFactory.ValidApiResponse(response);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Error occurred while retrieving workers details by establishment");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
-                    "An unexpected error occurred while processing the request and response.",
-                    nameof(GetWorkersByEstablishmentIdAsync));
-            }
-        }
         public async Task<IApiResponse<WorkerPersistResponse?>> SaveWorkerDetailsAsync(WorkerDetailsRequest request)
         {
             try
@@ -126,7 +99,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                             new ParameterConfig { ParameterName = DbConstants.P_E_SHRAM_ID, ParameterValue=request.ESharmId, DataType=DbType.String, Direction=ParameterDirection.Input },
 
                             new ParameterConfig { ParameterName = DbConstants.P_BOCW_ID, ParameterValue=request.BoCWId, DataType=DbType.String, Direction=ParameterDirection.Input },
-                            new ParameterConfig { ParameterName = DbConstants.P_ACCESS_CARD_ID, ParameterValue=request.Access_Card_Id, DataType=DbType.String, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_ACCESS_CARD_ID, ParameterValue=request.AccessCardId, DataType=DbType.String, Direction=ParameterDirection.Input },
 
                             new ParameterConfig { ParameterName = DbConstants.P_FIRST_NAME, ParameterValue=request.FirstName, DataType=DbType.String, Direction=ParameterDirection.Input },
                             new ParameterConfig { ParameterName = DbConstants.P_LAST_NAME, ParameterValue=request.LastName, DataType=DbType.String, Direction=ParameterDirection.Input },
@@ -193,7 +166,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         ProcedureName = DbConstants.USP_GET_WORKER_LOGIN_DETAILS,
                         Parameters = new List<ParameterConfig>()
                         {
-                            new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=request.MobileNumber, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                            new ParameterConfig { ParameterName = DbConstants.P_MOBILE_NUMBER, ParameterValue=request.MobileNumber, DataType=DbType.Int64, Direction=ParameterDirection.Input }
                         }
                     }
                 };
@@ -209,7 +182,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
             }
         }
 
-        public async Task<IApiResponse<WorkerCardDetailsResponse?>> GetDashboardCardDetailsAsync()
+        public async Task<IApiResponse<WorkerCardDetailsResponse?>> GetDashboardCardDetailsAsync(long workerId)
         {
             try
             {
@@ -221,6 +194,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         ProcedureName = DbConstants.USP_GET_WORKER_CARD_DETAILS,
                         Parameters = new List<ParameterConfig>()
                         {
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=workerId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
                         }
                     }
                 };

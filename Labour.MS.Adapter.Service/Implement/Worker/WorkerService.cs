@@ -2,18 +2,12 @@
 using Core.ApiResponse.Interface;
 using FluentValidation;
 using Labour.MS.Adapter.Models.DTOs.Request.Worker;
-using Labour.MS.Adapter.Models.DTOs.Response.Establishment;
 using Labour.MS.Adapter.Models.DTOs.Response.Worker;
 using Labour.MS.Adapter.Repository.Interface.Worker;
 using Labour.MS.Adapter.Service.Interface.Worker;
 using Labour.MS.Adapter.Utility;
 using Labour.MS.Adapter.Utility.Constants;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Labour.MS.Adapter.Service.Implement.Worker
 {
@@ -98,32 +92,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveWorkerDetailsByIdAsync));
             }
-        }
-
-        public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveWorkersByEstablishmentIdAsync(long establishmentId)
-        {
-            this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} started");
-            try
-            {
-                var response = await this._workerRepository.GetWorkersByEstablishmentIdAsync(establishmentId);
-
-                if (response.HasErrors())
-                {
-                    this._logger.LogWarning("Error occurred while retrieving workers by worker id.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerDetailsResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkersByEstablishmentIdAsync));
-                }
-
-                this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkersByEstablishmentIdAsync)} completed");
-                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
-            }
-            catch (Exception ex)
-            {
-                this._logger.LogError(ex, $"An exception occurred while retrieving workers by worker id");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerDetailsResponse?>>(
-                    "An unexpected error occurred while processing the request and response.",
-                    nameof(RetrieveWorkersByEstablishmentIdAsync));
-            }
-        }
+        }        
 
         public async Task<IApiResponse<WorkerPersistResponse?>> PersistWorkerDetailsAsync(WorkerDetailsRequest request)
         {
@@ -212,12 +181,12 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             }
         }
 
-        public async Task<IApiResponse<WorkerCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync()
+        public async Task<IApiResponse<WorkerCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync(long workerId)
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} started");
             try
             {
-                var response = await this._workerRepository.GetDashboardCardDetailsAsync();
+                var response = await this._workerRepository.GetDashboardCardDetailsAsync(workerId);
 
                 if (response.HasErrors())
                 {
