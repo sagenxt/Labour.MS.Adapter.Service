@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Core.ApiResponse" Version="1.0.0" />
-    <PackageReference Include="Core.MSSQL.DataAccess" Version="1.0.3" />
+    <PackageReference Include="Core.MSSQL.DataAccess" Version="1.0.5" />
   </ItemGroup>
 
   <ItemGroup>

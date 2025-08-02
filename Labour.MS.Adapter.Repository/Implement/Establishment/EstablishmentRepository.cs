@@ -295,5 +295,30 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                     nameof(GetWorkersByEstablishmentIdAsync));
             }
         }
+
+        public async Task<IApiResponse<int>> UpdateLastLoggedInDetailsAsync(long establishmentId)
+        {
+            try
+            {
+                var query = "UPDATE tbl_Establishment_Details SET Last_Logged_In = GETDATE() WHERE Establishment_Id = " + establishmentId + "";
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    InlineQueryConfigData = new InlineQueryConfig()
+                    {
+                        InlineQuery = query
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteInlineNonQueryAsync<int>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while updating last logged in details for establishment id: {establishmentId}");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<int>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(UpdateLastLoggedInDetailsAsync));
+            }
+        }
     }
 }

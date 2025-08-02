@@ -14,5 +14,6 @@ namespace Labour.MS.Adapter.Repository.Interface.Establishment
         Task<IApiResponse<EstablishmentCardDetailsResponse?>> GetDashboardCardDetailsAsync(long establishmentId);
         Task<IApiResponse<EstablishmentWorkerDetailPersistResponse?>> SaveWorkerDetailsByEstablishmentAsync(EstablishmentWorkerDetailsRequest request);
         Task<IApiResponse<IEnumerable<EstablishmentWorkerDetailsResponse?>>> GetWorkersByEstablishmentIdAsync(long establishmentId);
+        Task<IApiResponse<int>> UpdateLastLoggedInDetailsAsync(long establishmentId);
     }
 }

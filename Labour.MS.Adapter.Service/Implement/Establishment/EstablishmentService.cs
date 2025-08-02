@@ -170,12 +170,21 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                     return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
 
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning("Login failed due to establishment not found.");
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to establishment not found." ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
+                }
+
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
                 if (!isLoginSuccess)
                 {
                     this._logger.LogWarning("Login failed due to entered password is wrong.");
                     return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to entered password is wrong." ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
+
+                // Update last logged in details
+                var lastLoggedInResponse = await this._establishmentRepository.UpdateLastLoggedInDetailsAsync((long)response.Data?.EstablishmentId!);
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveEstablishmentLoginDetailsAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;
             }
