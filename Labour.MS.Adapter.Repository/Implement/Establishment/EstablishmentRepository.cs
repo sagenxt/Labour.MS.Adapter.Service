@@ -176,7 +176,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> GetAvailableAadhaarCardDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<AvailableAadhaarCardResponse?>>> GetAvailableAadhaarCardDetailsAsync()
         {
             try
             {
@@ -191,13 +191,13 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryAsync<SearchAadhaarCardResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<AvailableAadhaarCardResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error occurred while retrieving aadhaar card details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<AvailableAadhaarCardResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(GetAvailableAadhaarCardDetailsAsync));
             }

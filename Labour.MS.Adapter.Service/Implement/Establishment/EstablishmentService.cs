@@ -197,7 +197,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             }
         }
 
-        public async Task<IApiResponse<IEnumerable<SearchAadhaarCardResponse?>>> RetrieveAvailableAadhaarCardDetailsAsync()
+        public async Task<IApiResponse<IEnumerable<AvailableAadhaarCardResponse?>>> RetrieveAvailableAadhaarCardDetailsAsync()
         {
             this._logger.LogInformation($"Method Name : {nameof(RetrieveAvailableAadhaarCardDetailsAsync)} started");
             try
@@ -207,7 +207,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 if (response.HasErrors())
                 {
                     this._logger.LogWarning("Error occurred while retrieving all aadhaar card details.");
-                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAvailableAadhaarCardDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<AvailableAadhaarCardResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveAvailableAadhaarCardDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveAvailableAadhaarCardDetailsAsync)} completed");
@@ -216,7 +216,7 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
             catch (Exception ex)
             {
                 this._logger.LogError(ex, $"An exception occurred while retrieving all aadhaar card details");
-                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<SearchAadhaarCardResponse?>>(
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<AvailableAadhaarCardResponse?>>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveAvailableAadhaarCardDetailsAsync));
             }

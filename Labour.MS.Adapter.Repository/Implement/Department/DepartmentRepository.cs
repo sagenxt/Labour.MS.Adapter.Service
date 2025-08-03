@@ -56,6 +56,31 @@ namespace Labour.MS.Adapter.Repository.Implement.Department
             }
         }
 
+        public async Task<IApiResponse<int>> UpdateLastLoggedInDetailsAsync(long departmentUserId)
+        {
+            try
+            {
+                var query = "UPDATE tbl_Department_Users SET Last_Logged_In = GETDATE() WHERE Department_User_Id = " + departmentUserId + "";
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    InlineQueryConfigData = new InlineQueryConfig()
+                    {
+                        InlineQuery = query
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteInlineNonQueryAsync<int>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while updating last logged in details for department user id: {departmentUserId}");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<int>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(UpdateLastLoggedInDetailsAsync));
+            }
+        }
+
         public async Task<IApiResponse<DepartmentCardDetailsResponse?>> GetDashboardCardDetailsAsync()
         {
             try

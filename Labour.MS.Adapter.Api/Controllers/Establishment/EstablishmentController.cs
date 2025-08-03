@@ -82,8 +82,8 @@ namespace Labour.MS.Adapter.Api.Controllers.Establishment
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IApiResponse<SearchAadhaarCardResponse>), StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<SearchAadhaarCardResponse>))]
+        [ProducesResponseType(typeof(IApiResponse<AvailableAadhaarCardResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<AvailableAadhaarCardResponse>))]
         [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]

@@ -56,12 +56,20 @@ namespace Labour.MS.Adapter.Service.Implement.Department
                     return this._apiResponseFactory.BadRequestApiResponse<DepartmentLoginResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDepartmentLoginDetailsAsync));
                 }
 
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning("Login failed due to department user not found.");
+                    return this._apiResponseFactory.BadRequestApiResponse<DepartmentLoginResponse?>("Login failed due to department user not found." ?? "Unknown error", nameof(RetrieveDepartmentLoginDetailsAsync));
+                }
+
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
                 if (!isLoginSuccess)
                 {
                     this._logger.LogWarning("Login failed due to entered password is wrong.");
                     return this._apiResponseFactory.BadRequestApiResponse<DepartmentLoginResponse?>("Login failed due to entered password is wrong." ?? "Unknown error", nameof(RetrieveDepartmentLoginDetailsAsync));
                 }
+                // Update last logged in details
+                var lastLoggedInResponse = await this._departmentRepository.UpdateLastLoggedInDetailsAsync((long)response.Data?.DepartmentUserId!);
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDepartmentLoginDetailsAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;
             }

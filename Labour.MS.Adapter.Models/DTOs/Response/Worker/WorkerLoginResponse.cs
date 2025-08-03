@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace Labour.MS.Adapter.Models.DTOs.Response.Worker
 {
@@ -13,8 +9,11 @@ namespace Labour.MS.Adapter.Models.DTOs.Response.Worker
         public string? MiddleName { get; set; }
         public string? LastName { get; set; }
         public string? FullName { get; set; }
+
+        [JsonIgnore]
         public string? Password { get; set; }
         public long? MobileNumber { get; set; }
         public string? EmailId { get; set; }
+        public DateTime? LastLoggedIn { get; set; }
     }
 }

@@ -8,5 +8,6 @@ namespace Labour.MS.Adapter.Repository.Interface.Department
     {
         Task<IApiResponse<DepartmentLoginResponse?>> GetDepartmentLoginDetailsAsync(DepartmentLoginRequest request);
         Task<IApiResponse<DepartmentCardDetailsResponse?>> GetDashboardCardDetailsAsync();
+        Task<IApiResponse<int>> UpdateLastLoggedInDetailsAsync(long departmentUserId);
     }
 }
