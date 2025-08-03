@@ -10,6 +10,7 @@ namespace Labour.MS.Adapter.Utility.Constants
     {
         public const string InvalidRequestForEstablishmentDetails = "Request is invalid to retrieve establishment details. The details are {0}";
         public const string InvalidEstablishmentRequestDetails = "Request is invalid to persist establishment information. The details are {0}";
+        public const string InvalidRequestToLoginWithEstablishmentDetails = "Request is invalid to login. The details are {0}";
 
         public const string InvalidRequestForWorkerDetails = "Request is invalid to retrieve worker details. The details are {0}";
         public const string InvalidWorkerRequestDetails = "Request is invalid to persist worker information. The details are {0}";

@@ -159,8 +159,8 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                     {
                         errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
                     }
-                    this._logger.LogWarning(string.Format(WarningMessages.InvalidRequestForEstablishmentDetails, errorMessage));
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>(string.Format(WarningMessages.InvalidRequestForEstablishmentDetails, errorMessage), nameof(RetrieveEstablishmentLoginDetailsAsync));
+                    this._logger.LogWarning(string.Format(WarningMessages.InvalidRequestToLoginWithEstablishmentDetails, errorMessage));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>(string.Format(WarningMessages.InvalidRequestToLoginWithEstablishmentDetails, errorMessage), nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
                 var response = await this._establishmentRepository.GetEstablishmentLoginDetailsAsync(request);
 
