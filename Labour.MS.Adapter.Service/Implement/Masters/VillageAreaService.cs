@@ -64,6 +64,11 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                     this._logger.LogWarning("Error occurred while retrieving village-area details.");
                     return this._apiResponseFactory.BadRequestApiResponse<VillageAreaDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveVillageAreaDetailsByIdAsync));
                 }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Village or Area details are not found based on village or area id: {villageAreaId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<VillageAreaDetailsResponse?>($"Village or Area details are not found based on village or area id: {villageAreaId}", nameof(RetrieveVillageAreaDetailsByIdAsync));
+                }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveVillageAreaDetailsByIdAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;

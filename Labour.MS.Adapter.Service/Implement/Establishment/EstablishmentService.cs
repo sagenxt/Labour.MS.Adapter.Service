@@ -88,6 +88,11 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                     this._logger.LogWarning("Error occurred while retrieving establishment details.");
                     return this._apiResponseFactory.BadRequestApiResponse<EstablishmentDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveEstablishmentDetailsByIdAsync));
                 }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Establishment details are not found based on establishment id: {request.EstablishmentId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentDetailsResponse?>($"Establishment details are not found based on establishment id: {request.EstablishmentId}", nameof(RetrieveEstablishmentDetailsByIdAsync));
+                }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveEstablishmentDetailsByIdAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;
@@ -173,14 +178,14 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 if (response.Data == null)
                 {
                     this._logger.LogWarning("Login failed due to establishment not found.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to establishment not found." ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to establishment not found.", nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
 
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
                 if (!isLoginSuccess)
                 {
                     this._logger.LogWarning("Login failed due to entered password is wrong.");
-                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to entered password is wrong." ?? "Unknown error", nameof(RetrieveEstablishmentLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentLoginResponse?>("Login failed due to entered password is wrong.", nameof(RetrieveEstablishmentLoginDetailsAsync));
                 }
 
                 // Update last logged in details
@@ -233,6 +238,11 @@ namespace Labour.MS.Adapter.Service.Implement.Establishment
                 {
                     this._logger.LogWarning("Error occurred while retrieving establishment card details.");
                     return this._apiResponseFactory.BadRequestApiResponse<EstablishmentCardDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDashboardCardDetailsAsync));
+                }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Establishment dashboard card details are not found based on establishment id: {establishmentId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<EstablishmentCardDetailsResponse?>($"Establishment dashboard card details are not found based on establishment id: {establishmentId}", nameof(RetrieveDashboardCardDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} completed");

@@ -198,7 +198,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<WorkerCardDetailsResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<WorkerCardDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)

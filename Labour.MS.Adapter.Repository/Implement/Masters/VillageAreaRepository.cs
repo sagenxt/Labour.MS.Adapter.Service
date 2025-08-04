@@ -70,7 +70,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Masters
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<VillageAreaDetailsResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<VillageAreaDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)

@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
 using Core.ApiResponse.Interface;
 using FluentValidation;
-using Labour.MS.Adapter.Models.Data.Masters;
+using Labour.MS.Adapter.Models.DTOs.Response.Masters;
+using Labour.MS.Adapter.Repository.Interface.Masters;
 using Labour.MS.Adapter.Service.Implement.Establishment;
 using Labour.MS.Adapter.Service.Interface.Masters;
-using Labour.MS.Adapter.Repository.Interface.Masters;
 using Microsoft.Extensions.Logging;
-using Labour.MS.Adapter.Models.DTOs.Response.Masters;
 
 namespace Labour.MS.Adapter.Service.Implement.Masters
 {
@@ -66,6 +65,11 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                 {
                     this._logger.LogWarning("Error occurred while retrieving city details.");
                     return this._apiResponseFactory.BadRequestApiResponse<CityDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveCityDetailsByIdAsync));
+                }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"City details are not found based on city id: {cityId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<CityDetailsResponse?>($"City details are not found based on city id: {cityId}", nameof(RetrieveCityDetailsByIdAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveCityDetailsByIdAsync)} completed");

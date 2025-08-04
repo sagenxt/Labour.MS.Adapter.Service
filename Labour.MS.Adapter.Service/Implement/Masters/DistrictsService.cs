@@ -66,6 +66,11 @@ namespace Labour.MS.Adapter.Service.Implement.Masters
                     this._logger.LogWarning("Error occurred while retrieving city details.");
                     return this._apiResponseFactory.BadRequestApiResponse<DistrictDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDistrictDetailsByIdAsync));
                 }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"District details are not found based on district id: {districtId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<DistrictDetailsResponse?>($"District details are not found based on district id: {districtId}", nameof(RetrieveDistrictDetailsByIdAsync));
+                }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDistrictDetailsByIdAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;

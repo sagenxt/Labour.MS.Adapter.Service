@@ -59,7 +59,7 @@ namespace Labour.MS.Adapter.Service.Implement.Department
                 if (response.Data == null)
                 {
                     this._logger.LogWarning("Login failed due to department user not found.");
-                    return this._apiResponseFactory.BadRequestApiResponse<DepartmentLoginResponse?>("Login failed due to department user not found." ?? "Unknown error", nameof(RetrieveDepartmentLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<DepartmentLoginResponse?>("Login failed due to department user not found.", nameof(RetrieveDepartmentLoginDetailsAsync));
                 }
 
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
@@ -93,6 +93,11 @@ namespace Labour.MS.Adapter.Service.Implement.Department
                 {
                     this._logger.LogWarning("Error occurred while retrieving department card details.");
                     return this._apiResponseFactory.BadRequestApiResponse<DepartmentCardDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDashboardCardDetailsAsync));
+                }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Department dashboard card details are not found.");
+                    return this._apiResponseFactory.BadRequestApiResponse<DepartmentCardDetailsResponse?>("Department dashboard card details are not found", nameof(RetrieveDashboardCardDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} completed");

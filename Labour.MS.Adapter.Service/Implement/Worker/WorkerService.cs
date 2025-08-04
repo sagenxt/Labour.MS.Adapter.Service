@@ -81,6 +81,11 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                     this._logger.LogWarning("Error occurred while retrieving worker details.");
                     return this._apiResponseFactory.BadRequestApiResponse<WorkerDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkerDetailsByIdAsync));
                 }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Worker details are not found based on worker id: {workerId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetailsResponse?>($"Worker details are not found based on worker id: {workerId}" ?? "Unknown error", nameof(RetrieveWorkerDetailsByIdAsync));
+                }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerDetailsByIdAsync)} completed");
                 return this._apiResponseFactory.ValidApiResponse(response.Data)!;
@@ -165,14 +170,14 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 if (response.Data == null)
                 {
                     this._logger.LogWarning("Login failed due to worker not found.");
-                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>("Login failed due to worker not found." ?? "Unknown error", nameof(RetrieveWorkerLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>("Login failed due to worker not found.", nameof(RetrieveWorkerLoginDetailsAsync));
                 }
 
                 var isLoginSuccess = GenericFunctions.VerifyHashPassword(request.Password, response.Data?.Password!);
                 if (!isLoginSuccess)
                 {
                     this._logger.LogWarning("Login failed due to entered password is wrong.");
-                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>("Login failed due to entered password is wrong." ?? "Unknown error", nameof(RetrieveWorkerLoginDetailsAsync));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerLoginResponse?>("Login failed due to entered password is wrong.", nameof(RetrieveWorkerLoginDetailsAsync));
                 }
 
                 // Update last logged in details
@@ -200,6 +205,11 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 {
                     this._logger.LogWarning("Error occurred while retrieving worker card details.");
                     return this._apiResponseFactory.BadRequestApiResponse<WorkerCardDetailsResponse?>(response.Error?.Message ?? "Unknown error", nameof(RetrieveDashboardCardDetailsAsync));
+                }
+                if (response.Data == null)
+                {
+                    this._logger.LogWarning($"Worker dashboard card details are not found based on worker id: {workerId}");
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerCardDetailsResponse?>($"Worker dashboard card details are not found based on worker id: {workerId}", nameof(RetrieveDashboardCardDetailsAsync));
                 }
 
                 this._logger.LogInformation($"Method Name : {nameof(RetrieveDashboardCardDetailsAsync)} completed");

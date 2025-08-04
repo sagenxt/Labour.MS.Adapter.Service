@@ -72,7 +72,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<EstablishmentDetailsResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<EstablishmentDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
@@ -164,7 +164,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                             }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<EstablishmentLoginResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<EstablishmentLoginResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
@@ -219,7 +219,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Establishment
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQuerySingleAsync<EstablishmentCardDetailsResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<EstablishmentCardDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
