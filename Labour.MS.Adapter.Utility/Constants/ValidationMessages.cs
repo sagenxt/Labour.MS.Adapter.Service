@@ -10,11 +10,15 @@ namespace Labour.MS.Adapter.Utility.Constants
     {
         #region "Establishment Register validation messages"
 
+        public const string VM_ESTABLISHMENT_ID_REQUIRED = "Establishment Id is required";
         public const string VM_ESTABLISHEMNT_NAME_REQUIRED = "Establishment Name is required";
         public const string VM_CONTACT_PERSON_REQUIRED = "Owner/Manager/Contact Person Name is required";
         public const string VM_CATEGORY_OF_ESTABLISHMENT_REQUIRED = "Category of Establishment is required";
         public const string VM_NATURE_OF_WORK_REQUIRED = "Nature of Work is required";
         public const string VM_DATE_OF_COMMENCEMENT_REQUIRED = "Date of Commencement is required";
+
+        public const string VM_WORKING_FROM_DATE_REQUIRED = "Working From Date is required";
+        public const string VM_WORKING_TO_DATE_REQUIRED = "Working To Date is required";
 
         #endregion
 
@@ -37,6 +41,23 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string VM_INVALID_EMAIL_FORMAT = "Invalid email format";
         public const string VM_MOBILE_NUMBER_REQUIRED = "Mobile Number is required";
         public const string VM_MOBILE_NUMBER_DIGITS = "Mobile number must be exactly 10 digits";
+
+        #endregion
+
+        #region "Worker Register validation messages"
+
+        public const string VM_WORKER_ID_REQUIRED = "Worker Id is required";
+        public const string VM_AADHAAR_NUMBER_REQUIRED = "Aadhaar Number is required";
+        public const string VM_AADHAAR_NUMBER_DIGITS = "Aadhaar number must be exactly 12 digits";
+        public const string VM_FIRST_NAME_REQUIRED = "First Name is required";
+        public const string VM_LAST_NAME_REQUIRED = "Last Name is required";
+        public const string VM_GENDER_REQUIRED = "Gender is required";
+        public const string VM_DATE_OF_BIRTH_REQUIRED = "Date of Birth is required";
+        public const string VM_NRES_MEMBER_REQUIRED = "Is He/She NRES member is required";
+        public const string VM_MEMBER_OF_TRADE_UNION_REQUIRED = "Is He/She a member of Trade Union is required";
+        public const string VM_TRADE_UNION_NUMBER_REQUIRED = "Trade Union Number is required";
+
+        public const string VM_WORKER_ID_IS_NOT_VALID = "Worker id should not be less than or equal to zero";
 
         #endregion
 

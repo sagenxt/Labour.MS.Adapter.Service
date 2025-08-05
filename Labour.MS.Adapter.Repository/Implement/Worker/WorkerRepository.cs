@@ -70,7 +70,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryFirstOrDefaultAsync<WorkerDetailsResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<WorkerDetailsResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)
@@ -170,7 +170,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                         }
                     }
                 };
-                var response = await this._wrapperDbContext.ExecuteQueryFirstOrDefaultAsync<WorkerLoginResponse?>(dbStructureConfigData);
+                var response = await this._wrapperDbContext.ExecuteQuerySingleOrDefaultAsync<WorkerLoginResponse?>(dbStructureConfigData);
                 return this._apiResponseFactory.ValidApiResponse(response);
             }
             catch (Exception ex)

@@ -63,17 +63,11 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerDetailsByIdAsync)} started");
             try
             {
-                //var validationResult = await this._establishmentRequestValidator.ValidateAsync(request);
-                //if (!validationResult.IsValid)
-                //{
-                //    string errorMessage = string.Empty;
-                //    foreach (var error in validationResult.Errors)
-                //    {
-                //        errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
-                //    }
-                //    this._logger.LogWarning(string.Format(WarningMessages.InvalidRequestForWorkerDetails, errorMessage));
-                //    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetails?>(string.Format(WarningMessages.InvalidRequestForWorkerDetails, errorMessage), nameof(RetrieveWorkerDetailsByIdAsync));
-                //}
+                if (workerId <= 0)
+                {
+                    this._logger.LogWarning(string.Format(WarningMessages.InvalidRequestForWorkerDetails, ValidationMessages.VM_WORKER_ID_IS_NOT_VALID));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetailsResponse?>(string.Format(WarningMessages.InvalidRequestForWorkerDetails, ValidationMessages.VM_WORKER_ID_IS_NOT_VALID), nameof(RetrieveWorkerDetailsByIdAsync));
+                }
                 var response = await this._workerRepository.GetWorkerDetailsByIdAsync(workerId);
 
                 if (response.HasErrors())
@@ -104,17 +98,17 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsAsync)} started");
             try
             {
-                //var validationResult = await this._workerRequestDetailsValidator.ValidateAsync(request);
-                //if (!validationResult.IsValid)
-                //{
-                //    string errorMessage = string.Empty;
-                //    foreach (var error in validationResult.Errors)
-                //    {
-                //        errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
-                //    }
-                //    this._logger.LogWarning(string.Format(WarningMessages.InvalidWorkerRequestDetails, errorMessage));
-                //    return this._apiResponseFactory.BadRequestApiResponse<WorkerDetails?>(string.Format(WarningMessages.InvalidWorkerRequestDetails, errorMessage), nameof(PersistWorkerDetailsAsync));
-                //}
+                var validationResult = await this._workerRequestDetailsValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    string errorMessage = string.Empty;
+                    foreach (var error in validationResult.Errors)
+                    {
+                        errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
+                    }
+                    this._logger.LogWarning(string.Format(WarningMessages.InvalidWorkerRequestDetails, errorMessage));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerPersistResponse?>(string.Format(WarningMessages.InvalidWorkerRequestDetails, errorMessage), nameof(PersistWorkerDetailsAsync));
+                }
                 var response = await this._workerRepository.SaveWorkerDetailsAsync(request);
 
                 if (!response.HasErrors())

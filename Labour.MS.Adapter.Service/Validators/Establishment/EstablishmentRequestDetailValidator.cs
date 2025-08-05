@@ -16,8 +16,8 @@ namespace Labour.MS.Adapter.Service.Validators.Establishment
             RuleFor(x => x.EmailId)
                     .NotNull().NotEmpty()
                     .WithMessage(ValidationMessages.VM_EMAIL_REQUIRED)
-                        .Matches("^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")
-                        .WithMessage(ValidationMessages.VM_INVALID_EMAIL_FORMAT);
+                    .Matches("^(?:[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,})?$")
+                    .WithMessage(ValidationMessages.VM_INVALID_EMAIL_FORMAT);
             RuleFor(x => x.MobileNumber)
                     .NotNull().NotEmpty()
                     .WithMessage(ValidationMessages.VM_MOBILE_NUMBER_REQUIRED)
