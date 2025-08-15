@@ -17,20 +17,23 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
         private readonly IMapper _mapper;
         private readonly IApiResponseFactory _apiResponseFactory;
         private readonly IValidator<WorkerDetailsRequest> _workerRequestDetailsValidator;
-        private readonly IValidator<WorkerLoginRequest> _WorkerLoginRequestValidator;
+        private readonly IValidator<WorkerLoginRequest> _workerLoginRequestValidator;
+        private readonly IValidator<WorkerAttendanceRequest> _workerAttendanceRequestValidator;
         private readonly IWorkerRepository _workerRepository;
         public WorkerService(ILoggerFactory loggerFactory,
                            IMapper mapper,
                            IApiResponseFactory apiResponseFactory,
                            IValidator<WorkerDetailsRequest> workerRequestDetailValidator,
-                           IValidator<WorkerLoginRequest> WorkerLoginRequestValidator,
+                           IValidator<WorkerLoginRequest> workerLoginRequestValidator,
+                           IValidator<WorkerAttendanceRequest> workerAttendanceRequestValidator,
                            IWorkerRepository workerRepository)
         {
             this._logger = loggerFactory.CreateLogger<WorkerService>();
             this._mapper = mapper;
             this._apiResponseFactory = apiResponseFactory;
             this._workerRequestDetailsValidator = workerRequestDetailValidator;
-            this._WorkerLoginRequestValidator = WorkerLoginRequestValidator;
+            this._workerLoginRequestValidator = workerLoginRequestValidator;
+            this._workerAttendanceRequestValidator = workerAttendanceRequestValidator;
             this._workerRepository = workerRepository;
         }
         public async Task<IApiResponse<IEnumerable<WorkerDetailsResponse?>>> RetrieveAllWorkerDetailsAsync()
@@ -142,7 +145,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerLoginDetailsAsync)} started");
             try
             {
-                var validationResult = await this._WorkerLoginRequestValidator.ValidateAsync(request);
+                var validationResult = await this._workerLoginRequestValidator.ValidateAsync(request);
                 if (!validationResult.IsValid)
                 {
                     string errorMessage = string.Empty;
@@ -215,6 +218,50 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                 return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerCardDetailsResponse?>(
                     "An unexpected error occurred while processing the request and response.",
                     nameof(RetrieveDashboardCardDetailsAsync));
+            }
+        }
+
+        public async Task<IApiResponse<WorkerAttendanceResponse?>> PersistWorkerCheckinDetailsAsync(WorkerAttendanceRequest request)
+        {
+            this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsAsync)} started");
+            try
+            {
+                var validationResult = await this._workerAttendanceRequestValidator.ValidateAsync(request);
+                if (!validationResult.IsValid)
+                {
+                    string errorMessage = string.Empty;
+                    foreach (var error in validationResult.Errors)
+                    {
+                        errorMessage = !string.IsNullOrEmpty(errorMessage) ? errorMessage + ", " + error.ErrorMessage : error.ErrorMessage;
+                    }
+                    this._logger.LogWarning(string.Format(WarningMessages.InvalidWorkerAttendanceRequestDetails, errorMessage));
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerAttendanceResponse?>(string.Format(WarningMessages.InvalidWorkerAttendanceRequestDetails, errorMessage), nameof(PersistWorkerCheckinDetailsAsync));
+                }
+                var response = await this._workerRepository.SaveWorkerCheckinDetailsAsync(request);
+
+                if (!response.HasErrors())
+                {
+                    if (response.Data != null && response.Data.StatusCode != 200)
+                    {
+                        this._logger.LogWarning(response.Data.Message);
+                        return this._apiResponseFactory.BadRequestApiResponse<WorkerAttendanceResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerCheckinDetailsAsync));
+                    }
+
+                    this._logger.LogInformation($"Method Name : {nameof(PersistWorkerCheckinDetailsAsync)} completed");
+                    return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+                }
+                else
+                {
+                    this._logger.LogWarning("Error occurred while saving worker attendance info.");
+                    return this._apiResponseFactory.BadRequestApiResponse<WorkerAttendanceResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerCheckinDetailsAsync));
+                }
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, "An exception occurred in persisting worker attendance information.");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerAttendanceResponse?>(
+                    "An unexpected error occurred while processing the request.",
+                    nameof(PersistWorkerCheckinDetailsAsync));
             }
         }
 

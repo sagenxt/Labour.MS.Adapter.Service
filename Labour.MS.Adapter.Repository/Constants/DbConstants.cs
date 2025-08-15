@@ -47,6 +47,9 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string P_ESTMT_WORKER_ID = "Estmt_Worker_Id";
         public const string P_WORKING_FROM_DATE = "Working_From_Date";
         public const string P_WORKING_TO_DATE = "Working_To_Date";
+        public const string P_WORK_LOCATION = "Work_Location";
+        public const string P_CHECK_IN_DATE_TIME = "Check_In_Date_Time";
+        public const string P_CHECK_OUT_DATE_TIME = "Check_Out_Date_Time";
         public const string P_STATUS = "Status";
 
         #endregion
@@ -109,6 +112,8 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string P_IS_TRADE_UNION = "Is_Trade_Union";
         public const string P_TRADE_UNION_NUMBER = "Trade_Union_Number";
 
+        public const string P_ATTENDANCE_ID = "Attendance_Id";
+
         #endregion
 
         #region "Stored Procedure Names"
@@ -119,6 +124,7 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
         public const string USP_GET_AVAILABLE_AADHAAR_CARD_DETAILS = "usp_Get_Available_Adhaar_Card_Details";
         public const string USP_GET_WORKER_CARD_DETAILS = "usp_Get_Worker_Card_Details";
+        public const string USP_PERSIST_WORKER_ATTENDANCE_DETAILS = "usp_Persist_Worker_Attendance";
 
         #endregion
 

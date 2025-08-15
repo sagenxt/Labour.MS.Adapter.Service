@@ -94,5 +94,20 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.RetrieveDashboardCardDetailsAsync(workerId));
         }
+
+        [HttpPost]
+        [ProducesResponseType(typeof(IApiResponse<WorkerAttendanceResponse>), StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status200OK, "Ok", typeof(IApiResponse<WorkerAttendanceResponse>))]
+        [SwaggerResponse(StatusCodes.Status401Unauthorized, "Authentication Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status403Forbidden, "Authorisation Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status503ServiceUnavailable, "Service Unavailable", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
+        [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
+        [Route(ApiInfoConstant.WorkerCheckin)]
+        public async Task<IActionResult> PersistWorkerAttendanceDetails([FromBody] WorkerAttendanceRequest workerAttendanceRequest)
+        {
+            return this._apiResponseFactory.CreateResponse(await this._workerService.PersistWorkerCheckinDetailsAsync(workerAttendanceRequest));
+        }
     }
 }

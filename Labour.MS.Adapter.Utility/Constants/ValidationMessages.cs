@@ -22,6 +22,8 @@ namespace Labour.MS.Adapter.Utility.Constants
 
         #endregion
 
+        
+
         #region "Address validation messages"
 
         public const string VM_DOOR_NUMBER_REQUIRED = "Door number is required";
@@ -41,6 +43,10 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string VM_INVALID_EMAIL_FORMAT = "Invalid email format";
         public const string VM_MOBILE_NUMBER_REQUIRED = "Mobile Number is required";
         public const string VM_MOBILE_NUMBER_DIGITS = "Mobile number must be exactly 10 digits";
+        public const string VM_ESTABLISHMENT_WORKER_ID_REQUIRED = "Establishment worker id is required";
+        public const string VM_WORK_LOCATION_REQUIRED = "Work location is required";
+        public const string VM_WORKER_CHECK_IN_DATE_TIME_REQUIRED = "Checkin date and time is required";
+        public const string VM_WORKER_CHECK_IN_STATUS_REQUIRED = "Checkin status is required";
 
         #endregion
 

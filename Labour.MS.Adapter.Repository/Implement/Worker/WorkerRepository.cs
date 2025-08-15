@@ -235,5 +235,45 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
             }
         }
 
+        public async Task<IApiResponse<WorkerAttendanceResponse?>> SaveWorkerCheckinDetailsAsync(WorkerAttendanceRequest request)
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_PERSIST_WORKER_ATTENDANCE_DETAILS,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                            new ParameterConfig { ParameterName = DbConstants.P_ATTENDANCE_ID, ParameterValue=request.AttendanceId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTMT_WORKER_ID, ParameterValue=request.EstmtWorkerId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_ESTABLISHMENT_ID, ParameterValue=request.EstablishmentId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=request.WorkerId, DataType=DbType.Int64, Direction=ParameterDirection.Input },
+                            
+                            new ParameterConfig { ParameterName = DbConstants.P_WORK_LOCATION, ParameterValue=request.WorkLocation, DataType=DbType.String, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_CHECK_IN_DATE_TIME, ParameterValue=request.CheckInDateTime, DataType=DbType.DateTime, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_CHECK_OUT_DATE_TIME, ParameterValue=request.CheckOutDateTime, DataType=DbType.DateTime, Direction=ParameterDirection.Input },
+                            new ParameterConfig { ParameterName = DbConstants.P_STATUS, ParameterValue=request.Status, DataType=DbType.String, Direction=ParameterDirection.Input },
+
+                            new ParameterConfig { ParameterName=DbConstants.P_STATUS_CODE, ParameterValue=0, DataType=DbType.Int32, Direction=ParameterDirection.Output, Size=2000},
+                            new ParameterConfig { ParameterName=DbConstants.P_MESSAGE, ParameterValue=null, DataType=DbType.String, Direction=ParameterDirection.Output, Size=2000 }
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteNonQueryAsync<WorkerAttendanceResponse>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while saving worker checkin details.");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<WorkerAttendanceResponse?>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(SaveWorkerCheckinDetailsAsync));
+            }
+        }
+
     }
 }

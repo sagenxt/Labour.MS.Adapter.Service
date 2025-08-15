@@ -15,5 +15,10 @@ namespace Labour.MS.Adapter.Models.DTOs.Response.Worker
         public long? MobileNumber { get; set; }
         public string? EmailId { get; set; }
         public DateTime? LastLoggedIn { get; set; }
+        public long? EstablishmentId { get; set; }
+        public long? EstmtWorkerId { get; set; }
+        public string? EstablishmentName { get; set; }
+        public string? WorkLocation { get; set; }
+        public string? Status { get; set; }
     }
 }

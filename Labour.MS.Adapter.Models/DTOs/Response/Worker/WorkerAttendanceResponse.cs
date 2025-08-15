@@ -2,7 +2,8 @@
 
 namespace Labour.MS.Adapter.Models.DTOs.Response.Worker
 {
-    public class WorkerPersistResponse : ResponseModel
+    public class WorkerAttendanceResponse : ResponseModel
     {
+
     }
 }
