@@ -8,8 +8,8 @@ namespace Labour.MS.Adapter.Models.Data.Worker
         public long? WorkerId { get; set; }
         public long? EstmtWorkerId { get; set; }
         public string? WorkLocation { get; set; }
-        public DateTime CheckInDateTime { get; set; }
-        public DateTime CheckOutDateTime { get; set; }
+        public DateTime? CheckInDateTime { get; set; }
+        public DateTime? CheckOutDateTime { get; set; }
         public string? Status { get; set; }
     }
 }

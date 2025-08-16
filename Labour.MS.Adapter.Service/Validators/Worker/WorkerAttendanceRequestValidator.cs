@@ -24,7 +24,12 @@ namespace Labour.MS.Adapter.Service.Validators.Worker
                                     .WithMessage(ValidationMessages.VM_WORK_LOCATION_REQUIRED);
             RuleFor(x => x.CheckInDateTime).NotNull()
                                     .NotEmpty()
-                                    .WithMessage(ValidationMessages.VM_WORKER_CHECK_IN_DATE_TIME_REQUIRED);
+                                    .WithMessage(ValidationMessages.VM_WORKER_CHECK_IN_DATE_TIME_REQUIRED)
+                                    .When(x => x.Status != null && x.Status.ToLower() == "i");
+            RuleFor(x => x.CheckOutDateTime).NotNull()
+                                    .NotEmpty()
+                                    .WithMessage(ValidationMessages.VM_WORKER_CHECK_OUT_DATE_TIME_REQUIRED)
+                                    .When(x => x.Status != null && x.Status.ToLower() == "o");
             RuleFor(x => x.Status).NotNull()
                                     .NotEmpty()
                                     .WithMessage(ValidationMessages.VM_WORKER_CHECK_IN_STATUS_REQUIRED);

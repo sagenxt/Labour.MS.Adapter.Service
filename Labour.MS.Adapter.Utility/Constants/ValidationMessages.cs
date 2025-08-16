@@ -46,6 +46,7 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string VM_ESTABLISHMENT_WORKER_ID_REQUIRED = "Establishment worker id is required";
         public const string VM_WORK_LOCATION_REQUIRED = "Work location is required";
         public const string VM_WORKER_CHECK_IN_DATE_TIME_REQUIRED = "Checkin date and time is required";
+        public const string VM_WORKER_CHECK_OUT_DATE_TIME_REQUIRED = "Checkout date and time is required";
         public const string VM_WORKER_CHECK_IN_STATUS_REQUIRED = "Checkin status is required";
 
         #endregion
