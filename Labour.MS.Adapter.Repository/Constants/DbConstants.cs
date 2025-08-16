@@ -123,7 +123,7 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_PERSIST_WORKER_DETAILS = "usp_Persist_Worker_Details";
         public const string USP_GET_WORKER_LOGIN_DETAILS = "usp_Get_Worker_Login_Details";
         public const string USP_GET_AVAILABLE_AADHAAR_CARD_DETAILS = "usp_Get_Available_Adhaar_Card_Details";
-        public const string USP_GET_WORKER_CARD_DETAILS = "usp_Get_Worker_Card_Details";
+        public const string USP_GET_DASHBOARD_CARD_DETAILS_BY_WORKER = "usp_Get_DashBoard_Cards_By_Worker";
         public const string USP_PERSIST_WORKER_ATTENDANCE_DETAILS = "usp_Persist_Worker_Attendance";
 
         #endregion
@@ -135,7 +135,7 @@ namespace Labour.MS.Adapter.Repository.Constants
         #region "Stored Procedure Names"
 
         public const string USP_GET_DEPARTMENT_LOGIN_DETAILS = "usp_Get_Department_Login_Details";
-        public const string USP_GET_DEPARTMENT_CARD_DETAILS = "usp_Get_Department_Card_Details";
+        public const string USP_GET_DASHBOARD_CARD_DETAILS_BY_DEPARTMENT = "usp_Get_DashBoard_Cards_By_Department";
 
         #endregion
 

@@ -191,7 +191,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.USP_GET_WORKER_CARD_DETAILS,
+                        ProcedureName = DbConstants.USP_GET_DASHBOARD_CARD_DETAILS_BY_WORKER,
                         Parameters = new List<ParameterConfig>()
                         {
                             new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=workerId, DataType=DbType.Int64, Direction=ParameterDirection.Input }

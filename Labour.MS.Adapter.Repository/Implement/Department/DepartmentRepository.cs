@@ -90,7 +90,7 @@ namespace Labour.MS.Adapter.Repository.Implement.Department
                     ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
                     SPConfigData = new StoredProcedureConfig()
                     {
-                        ProcedureName = DbConstants.USP_GET_DEPARTMENT_CARD_DETAILS,
+                        ProcedureName = DbConstants.USP_GET_DASHBOARD_CARD_DETAILS_BY_DEPARTMENT,
                         Parameters = new List<ParameterConfig>()
                         {
                         }
