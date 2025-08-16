@@ -104,7 +104,7 @@ namespace Labour.MS.Adapter.Api.Controllers.Worker
         [SwaggerResponse(StatusCodes.Status400BadRequest, "Bad Request", typeof(string))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "Internal Server Error", typeof(string))]
         [SwaggerResponse(StatusCodes.Status499ClientClosedRequest, "Client Closed Request")]
-        [Route(ApiInfoConstant.WorkerCheckin)]
+        [Route(ApiInfoConstant.WorkerCheckinOrOut)]
         public async Task<IActionResult> PersistWorkerAttendanceDetails([FromBody] WorkerAttendanceRequest workerAttendanceRequest)
         {
             return this._apiResponseFactory.CreateResponse(await this._workerService.PersistWorkerCheckinDetailsAsync(workerAttendanceRequest));
