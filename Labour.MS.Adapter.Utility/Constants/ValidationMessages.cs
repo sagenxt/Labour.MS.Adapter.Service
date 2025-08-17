@@ -12,7 +12,9 @@ namespace Labour.MS.Adapter.Utility.Constants
 
         public const string VM_ESTABLISHMENT_ID_REQUIRED = "Establishment Id is required";
         public const string VM_ESTABLISHEMNT_NAME_REQUIRED = "Establishment Name is required";
+        public const string VM_ESTABLISHEMNT_NAME_INVALID = "Establishment Name must contain only letters";
         public const string VM_CONTACT_PERSON_REQUIRED = "Owner/Manager/Contact Person Name is required";
+        public const string VM_CONTACT_PERSON_INVALID = "Owner/Manager/Contact Person Name must contain only letters";
         public const string VM_CATEGORY_OF_ESTABLISHMENT_REQUIRED = "Category of Establishment is required";
         public const string VM_NATURE_OF_WORK_REQUIRED = "Nature of Work is required";
         public const string VM_DATE_OF_COMMENCEMENT_REQUIRED = "Date of Commencement is required";
@@ -57,7 +59,10 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string VM_AADHAAR_NUMBER_REQUIRED = "Aadhaar Number is required";
         public const string VM_AADHAAR_NUMBER_DIGITS = "Aadhaar number must be exactly 12 digits";
         public const string VM_FIRST_NAME_REQUIRED = "First Name is required";
+        public const string VM_FIRST_NAME_INVALID = "First Name must contain only letters";
         public const string VM_LAST_NAME_REQUIRED = "Last Name is required";
+        public const string VM_LAST_NAME_INVALID = "Last Name must contain only letters";
+        public const string VM_MIDDLE_NAME_INVALID = "Middle Name must contain only letters";
         public const string VM_GENDER_REQUIRED = "Gender is required";
         public const string VM_DATE_OF_BIRTH_REQUIRED = "Date of Birth is required";
         public const string VM_NRES_MEMBER_REQUIRED = "Is He/She NRES member is required";

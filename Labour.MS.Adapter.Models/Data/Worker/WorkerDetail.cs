@@ -10,7 +10,6 @@ namespace Labour.MS.Adapter.Models.Data.Worker
     {
         public long? WorkerId { get; set; }
         public string? AadhaarNumber { get; set; }
-        public string? ECardId { get; set; }
         public string? ESharmId { get; set; }
         public string? BoCWId { get; set; }
         public string? AccessCardId { get; set; }

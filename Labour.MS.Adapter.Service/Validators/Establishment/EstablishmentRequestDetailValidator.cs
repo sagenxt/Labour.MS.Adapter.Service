@@ -12,7 +12,8 @@ namespace Labour.MS.Adapter.Service.Validators.Establishment
             RuleFor(x => x).NotNull();
             RuleFor(x => x.EstablishmentName)
                     .NotNull().NotEmpty()
-                    .WithMessage(ValidationMessages.VM_ESTABLISHEMNT_NAME_REQUIRED);
+                    .WithMessage(ValidationMessages.VM_ESTABLISHEMNT_NAME_REQUIRED)
+                    .Matches("^[a-zA-Z]+$").WithMessage(ValidationMessages.VM_ESTABLISHEMNT_NAME_INVALID);
             RuleFor(x => x.EmailId)
                     .NotNull().NotEmpty()
                     .WithMessage(ValidationMessages.VM_EMAIL_REQUIRED)
@@ -25,7 +26,8 @@ namespace Labour.MS.Adapter.Service.Validators.Establishment
                     .WithMessage(ValidationMessages.VM_MOBILE_NUMBER_DIGITS);
             RuleFor(x => x.ContactPerson)
                     .NotNull().NotEmpty()
-                    .WithMessage(ValidationMessages.VM_CONTACT_PERSON_REQUIRED);
+                    .WithMessage(ValidationMessages.VM_CONTACT_PERSON_REQUIRED)
+                    .Matches("^[a-zA-Z]+$").WithMessage(ValidationMessages.VM_CONTACT_PERSON_INVALID);
             RuleFor(x => x.DoorNumber)
                     .NotNull().NotEmpty()
                     .WithMessage(ValidationMessages.VM_DOOR_NUMBER_REQUIRED);

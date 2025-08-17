@@ -19,11 +19,16 @@ namespace Labour.MS.Adapter.Service.Validators.Worker
             RuleFor(x => x.FirstName)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage(ValidationMessages.VM_FIRST_NAME_REQUIRED);
+                .WithMessage(ValidationMessages.VM_FIRST_NAME_REQUIRED)
+                .Matches("^[a-zA-Z]+$").WithMessage(ValidationMessages.VM_FIRST_NAME_INVALID);
             RuleFor(x => x.LastName)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage(ValidationMessages.VM_LAST_NAME_REQUIRED);
+                .WithMessage(ValidationMessages.VM_LAST_NAME_REQUIRED)
+                .Matches("^[a-zA-Z]+$").WithMessage(ValidationMessages.VM_LAST_NAME_INVALID);
+            RuleFor(x => x.MiddleName)
+                .Matches("^[a-zA-Z]+$").WithMessage(ValidationMessages.VM_MIDDLE_NAME_INVALID)
+                .When(x => !string.IsNullOrWhiteSpace(x.MiddleName));
             RuleFor(x => x.Gender)
                 .NotNull()
                 .NotEmpty()
