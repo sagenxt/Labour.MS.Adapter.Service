@@ -21,7 +21,7 @@ namespace Labour.MS.Adapter.Models.DTOs.Response.Establishment
         public int? CityId { get; set; }
         public string? CityName { get; set; }
         public int? VillageOrAreaId { get; set; }
-        public int? VillageOrAreaName { get; set; }
+        public string? VillageOrAreaName { get; set; }
         public int? Pincode { get; set; }
     }
 }
