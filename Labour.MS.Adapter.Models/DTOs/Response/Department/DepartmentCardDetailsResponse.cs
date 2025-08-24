@@ -7,6 +7,6 @@ namespace Labour.MS.Adapter.Models.DTOs.Response.Department
         public int LoggedInWorkers { get; set; }
         public int LoggedOutWorkers { get; set; }
         public int NewEstablishmentWorkers { get; set; }
-        public int NewRegistrationWorkers { get; set; }
+        public int NewRegisteredWorkers { get; set; }
     }
 }

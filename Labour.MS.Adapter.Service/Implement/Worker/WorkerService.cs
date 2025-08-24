@@ -119,7 +119,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                     if (response.Data != null && response.Data.StatusCode != 200)
                     {
                         this._logger.LogWarning(response.Data.Message);
-                        return this._apiResponseFactory.BadRequestApiResponse<WorkerPersistResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
+                        return this._apiResponseFactory.BadRequestApiResponse<WorkerPersistResponse?>(response.Data?.Message ?? "Unknown error", nameof(PersistWorkerDetailsAsync));
                     }
 
                     this._logger.LogInformation($"Method Name : {nameof(PersistWorkerDetailsAsync)} completed");
@@ -244,7 +244,7 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
                     if (response.Data != null && response.Data.StatusCode != 200)
                     {
                         this._logger.LogWarning(response.Data.Message);
-                        return this._apiResponseFactory.BadRequestApiResponse<WorkerAttendanceResponse?>(response.Error?.Message ?? "Unknown error", nameof(PersistWorkerCheckinDetailsAsync));
+                        return this._apiResponseFactory.BadRequestApiResponse<WorkerAttendanceResponse?>(response.Data?.Message ?? "Unknown error", nameof(PersistWorkerCheckinDetailsAsync));
                     }
 
                     this._logger.LogInformation($"Method Name : {nameof(PersistWorkerCheckinDetailsAsync)} completed");
