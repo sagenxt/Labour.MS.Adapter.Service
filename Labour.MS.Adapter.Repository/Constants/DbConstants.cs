@@ -125,6 +125,7 @@ namespace Labour.MS.Adapter.Repository.Constants
         public const string USP_GET_AVAILABLE_AADHAAR_CARD_DETAILS = "usp_Get_Available_Adhaar_Card_Details";
         public const string USP_GET_DASHBOARD_CARD_DETAILS_BY_WORKER = "usp_Get_DashBoard_Cards_By_Worker";
         public const string USP_PERSIST_WORKER_ATTENDANCE_DETAILS = "usp_Persist_Worker_Attendance";
+        public const string USP_GET_WORKER_RECENT_ATTENDANCE = "usp_Get_Worker_Recent_Attendance";
 
         #endregion
 

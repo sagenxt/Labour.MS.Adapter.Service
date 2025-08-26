@@ -12,5 +12,6 @@ namespace Labour.MS.Adapter.Service.Interface.Worker
         Task<IApiResponse<WorkerLoginResponse?>> RetrieveWorkerLoginDetailsAsync(WorkerLoginRequest request);
         Task<IApiResponse<WorkerCardDetailsResponse?>> RetrieveDashboardCardDetailsAsync(long workerId);
         Task<IApiResponse<WorkerAttendanceResponse?>> PersistWorkerCheckinDetailsAsync(WorkerAttendanceRequest request);
+        Task<IApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>> RetrieveWorkerRecentAttendanceDetailsAsync(long workerId);
     }
 }

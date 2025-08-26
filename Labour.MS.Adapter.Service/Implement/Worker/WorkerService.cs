@@ -265,5 +265,30 @@ namespace Labour.MS.Adapter.Service.Implement.Worker
             }
         }
 
+        public async Task<IApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>> RetrieveWorkerRecentAttendanceDetailsAsync(long workerId)
+        {
+            this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerRecentAttendanceDetailsAsync)} started");
+            try
+            {
+                var response = await this._workerRepository.GetWorkerRecentAttendanceDetailsAsync(workerId);
+
+                if (response.HasErrors())
+                {
+                    this._logger.LogWarning("Error occurred while retrieving worker recent attendance details.");
+                    return this._apiResponseFactory.BadRequestApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>(response.Error?.Message ?? "Unknown error", nameof(RetrieveWorkerRecentAttendanceDetailsAsync));
+                }
+
+                this._logger.LogInformation($"Method Name : {nameof(RetrieveWorkerRecentAttendanceDetailsAsync)} completed");
+                return this._apiResponseFactory.ValidApiResponse(response.Data)!;
+            }
+            catch (Exception ex)
+            {
+                this._logger.LogError(ex, $"An exception occurred while retrieving worker recent attendance details.");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(RetrieveWorkerRecentAttendanceDetailsAsync));
+            }
+        }
+
     }
 }

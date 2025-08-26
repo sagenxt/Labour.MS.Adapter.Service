@@ -35,6 +35,7 @@ namespace Labour.MS.Adapter.Utility.Constants
         public const string WorkerLogin = "worker/login";
         public const string WorkerDashboardCardDetails = "worker/dashboard/carddetails";
         public const string WorkerCheckinOrOut = "worker/checkinorout";
+        public const string WorkerRecentAttendance = "worker/recent/attendance";
 
         #endregion
 

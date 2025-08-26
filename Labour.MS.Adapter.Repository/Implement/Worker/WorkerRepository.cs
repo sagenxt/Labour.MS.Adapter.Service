@@ -275,5 +275,32 @@ namespace Labour.MS.Adapter.Repository.Implement.Worker
             }
         }
 
+        public async Task<IApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>> GetWorkerRecentAttendanceDetailsAsync(long workerId)
+        {
+            try
+            {
+                DatabaseStructureConfig dbStructureConfigData = new DatabaseStructureConfig()
+                {
+                    ConnectionString = this._configuration.GetConnectionString(ApiInfoConstant.NameOfConnectionString),
+                    SPConfigData = new StoredProcedureConfig()
+                    {
+                        ProcedureName = DbConstants.USP_GET_WORKER_RECENT_ATTENDANCE,
+                        Parameters = new List<ParameterConfig>()
+                        {
+                            new ParameterConfig { ParameterName = DbConstants.P_WORKER_ID, ParameterValue=workerId, DataType=DbType.Int64, Direction=ParameterDirection.Input }
+                        }
+                    }
+                };
+                var response = await this._wrapperDbContext.ExecuteQueryAsync<WorkerRecentAttendanceResponse?>(dbStructureConfigData);
+                return this._apiResponseFactory.ValidApiResponse(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while retrieving worker recent attendance details");
+                return this._apiResponseFactory.InternalServerErrorApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>(
+                    "An unexpected error occurred while processing the request and response.",
+                    nameof(GetWorkerRecentAttendanceDetailsAsync));
+            }
+        }
     }
 }

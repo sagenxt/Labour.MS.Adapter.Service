@@ -13,5 +13,6 @@ namespace Labour.MS.Adapter.Repository.Interface.Worker
         Task<IApiResponse<WorkerCardDetailsResponse?>> GetDashboardCardDetailsAsync(long workerId);
         Task<IApiResponse<int>> UpdateLastLoggedInDetailsAsync(long workerId);
         Task<IApiResponse<WorkerAttendanceResponse?>> SaveWorkerCheckinDetailsAsync(WorkerAttendanceRequest request);
+        Task<IApiResponse<IEnumerable<WorkerRecentAttendanceResponse?>>> GetWorkerRecentAttendanceDetailsAsync(long workerId);
     }
 }
